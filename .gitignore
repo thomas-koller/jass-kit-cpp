@@ -1,3 +1,11 @@
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+.idea
+dist
+
+
 # Prerequisites
 *.d
 
