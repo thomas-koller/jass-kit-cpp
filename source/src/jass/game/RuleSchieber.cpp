@@ -249,7 +249,7 @@ void jass::RuleSchieber::assert_invariants(const GameState& state) const {
         assert(state.trump >= 0 && state.trump <=5);
         if (state.forehand == 1) {
             assert(state.declared_trump_player == next_player(state.dealer));
-        } else {
+        } else if (state.forehand == 0) {
             assert(state.declared_trump_player == partner_player(next_player(state.dealer)));
         }
         assert(state.trick_first_player[0] == next_player(state.dealer));
@@ -303,7 +303,7 @@ void jass::RuleSchieber::assert_invariants(const GameObservation& obs) const{
         assert(obs.trump >= 0 && obs.trump <= 5);
         if (obs.forehand == 1) {
             assert(obs.declared_trump_player == next_player(obs.dealer));
-        } else {
+        } else if (obs.forehand == 0) {
             assert(obs.declared_trump_player == partner_player(next_player(obs.dealer)));
         }
         // first player is only set after the first card of a trick

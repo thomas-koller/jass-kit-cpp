@@ -43,7 +43,26 @@ public:
             }
         }
         return hands;
+    }
 
+    static CardSetPlayer deal_hands(const CardList &north,
+                                    const CardList &east,
+                                    const CardList &south,
+                                    const CardList &west) {
+        CardSetPlayer hands = CardSetPlayer::Zero();
+        for (auto card: north) {
+            hands(NORTH, card) = 1;
+        }
+        for (auto card: east) {
+            hands(EAST, card) = 1;
+        }
+        for (auto card: south) {
+            hands(SOUTH, card) = 1;
+        }
+        for (auto card: west) {
+            hands(WEST, card) = 1;
+        }
+        return hands;
     }
 
 };

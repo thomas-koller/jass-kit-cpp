@@ -71,6 +71,13 @@ public:
      * @return the winner of the trick
      */
     virtual int calc_winner(const CardTrick& trick, int first_player, int trump) = 0;
+
+    /// check invariants for this rule and state
+    virtual void assert_invariants(const GameState &state) const = 0;
+
+    /// check invariants for this rule and obs
+    virtual void assert_invariants(const GameObservation &obs) const = 0;
+
 };
 
 #endif //JASS_CPLUSPLUS_RULE_H

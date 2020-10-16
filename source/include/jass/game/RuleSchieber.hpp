@@ -31,10 +31,10 @@ public:
     int calc_winner(const CardTrick &trick, int first_player, int trump) override;
 
     /// check invariants for this rule and state
-    void assert_invariants(const GameState &state) const;
+    void assert_invariants(const GameState &state) const override;
 
     /// check invariants for this rule and obs
-    void assert_invariants(const GameObservation &obs) const;
+    void assert_invariants(const GameObservation &obs) const override;
 
 private:
     Eigen::Array<int, 36, 36> higher_trump;

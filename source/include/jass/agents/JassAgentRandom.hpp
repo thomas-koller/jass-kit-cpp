@@ -6,6 +6,8 @@
 #define JASS_JASSAGENTRANDOM_HPP
 
 #include <random>
+#include <mutex>
+
 #include "jass/agents/JassAgent.hpp"
 #include "jass/game/RuleSchieber.hpp"
 

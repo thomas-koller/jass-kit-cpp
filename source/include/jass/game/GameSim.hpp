@@ -26,6 +26,7 @@ private:
     GameRule::Ptr rule;
 
 public:
+    typedef std::shared_ptr<GameSim> Ptr;
     /// State of the game. This is public as in python. State might be set from outside anytime as
     /// long as it is valid.
     GameState state;
@@ -53,6 +54,14 @@ public:
      * @param card the card to play
      */
     void perform_action_play_card(int card);
+
+    /**
+     * Return true if the game has finished.
+     * @return true if the game has finished, false otherwise
+     */
+    inline bool is_done() const {
+        return state.nr_played_cards == 36;
+    }
 
 
 private:

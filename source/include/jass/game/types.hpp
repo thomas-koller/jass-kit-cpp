@@ -45,7 +45,8 @@ namespace jass {
         Eigen::Array<float, 7, 1> reward;
     };
 
-
+    // Card Distribution Probabilities
+    typedef Eigen::Array<float, 4 /* rows */, NR_CARDS /* cols */> CardProbabilities;
 }
 
 

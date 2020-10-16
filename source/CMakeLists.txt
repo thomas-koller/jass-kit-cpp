@@ -1,29 +1,50 @@
-set (SOURCE_FILES
+set (INCLUDE_FILES
         include/jass/game/types.hpp
         include/jass/game/const.hpp
         include/jass/game/GameRule.hpp
         include/jass/game/RuleSchieber.hpp
-        src/jass/game/RuleSchieber.cpp
-        src/jass/game/GameSim.cpp
         include/jass/game/GameSim.hpp
-        src/jass/game/GameObservation.cpp
         include/jass/game/GameObservation.hpp
-        src/jass/game/GameState.cpp
         include/jass/game/GameState.hpp
         include/jass/game/GameStateUtils.hpp
         include/jass/game/GameUtils.hpp
         include/jass/agents/JassAgent.hpp
+        include/jass/agents/JassAgentRandom.hpp)
+
+
+set (SOURCE_FILES
+        src/jass/game/RuleSchieber.cpp
+        src/jass/game/GameSim.cpp
+        src/jass/game/GameObservation.cpp
+        src/jass/game/GameState.cpp
         src/jass/agents/JassAgentRandom.cpp
-        include/jass/agents/JassAgentRandom.hpp
         src/jass/game/GameStateUtils.cpp)
 
 set (JASS_LIB jass)
+set (JASS_LIB_STATIC jass_static)
 
 
 add_library(${JASS_LIB} SHARED ${SOURCE_FILES})
+add_library(${JASS_LIB_STATIC}  ${SOURCE_FILES})
 
 SET_TARGET_PROPERTIES( ${JASS_LIB}
         PROPERTIES
         DEBUG_OUTPUT_NAME ${JASS_LIB}_debug
         RELEASE_OUTPUT_NAME ${JASS_LIB}
         )
+
+SET_TARGET_PROPERTIES( ${JASS_LIB_STATIC}
+        PROPERTIES
+        DEBUG_OUTPUT_NAME ${JASS_LIB_STATIC}_debug
+        RELEASE_OUTPUT_NAME ${JASS_LIB_STATIC}
+        )
+
+install(TARGETS ${JASS_LIB} ${JASS_LIB_STATIC}
+        LIBRARY DESTINATION lib)
+
+# install with preserving structure
+install(
+        DIRECTORY ${CMAKE_SOURCE_DIR}/source/include/jass
+        DESTINATION include
+        FILES_MATCHING PATTERN "*.hpp"
+)
