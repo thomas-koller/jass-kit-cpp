@@ -40,11 +40,16 @@ SET_TARGET_PROPERTIES( ${JASS_LIB_STATIC}
         )
 
 install(TARGETS ${JASS_LIB} ${JASS_LIB_STATIC}
-        LIBRARY DESTINATION lib)
+        EXPORT ${JASS_LIB}
+        LIBRARY DESTINATION lib
+       )
 
 # install with preserving structure
 install(
         DIRECTORY ${CMAKE_SOURCE_DIR}/source/include/jass
+        EXPORT ${JASS_LIB}
         DESTINATION include
         FILES_MATCHING PATTERN "*.hpp"
 )
+
+install(EXPORT ${JASS_LIB} DESTINATION lib/jass)

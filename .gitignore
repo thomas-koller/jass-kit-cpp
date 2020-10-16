@@ -38,3 +38,8 @@ dist
 *.exe
 *.out
 *.app
+
+# cmake builds
+cmake-build-debug
+cmake-build-release
+

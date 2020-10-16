@@ -18,5 +18,6 @@ TEST(GameObservation, copy) {
 
     GameObservation obs2 = obs;
     ASSERT_EQ(obs2.dealer, 2);
-    ASSERT_EQ(obs, obs2);
+    // ASSERT_EQ(obs, obs2);
+    ASSERT_TRUE(obs == obs2);
 }
