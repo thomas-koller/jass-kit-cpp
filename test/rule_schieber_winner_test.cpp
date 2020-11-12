@@ -19,12 +19,12 @@ TEST(RuleSchieberWinnerTest, trick1) {
     trick(2) = HQ; // W
     trick(3) = C7; // S
 
-    EXPECT_EQ(EAST, rule.calc_winner(trick, EAST, DIAMONDS));
-    EXPECT_EQ(WEST, rule.calc_winner(trick, EAST, HEARTS));
-    EXPECT_EQ(EAST, rule.calc_winner(trick, EAST, SPADES));
-    EXPECT_EQ(SOUTH, rule.calc_winner(trick, EAST, CLUBS));
-    EXPECT_EQ(EAST, rule.calc_winner(trick, EAST, OBE_ABE));
-    EXPECT_EQ(NORTH, rule.calc_winner(trick, EAST, UNE_UFE));
+    EXPECT_EQ(EAST, rule.calcWinner(trick, EAST, DIAMONDS));
+    EXPECT_EQ(WEST, rule.calcWinner(trick, EAST, HEARTS));
+    EXPECT_EQ(EAST, rule.calcWinner(trick, EAST, SPADES));
+    EXPECT_EQ(SOUTH, rule.calcWinner(trick, EAST, CLUBS));
+    EXPECT_EQ(EAST, rule.calcWinner(trick, EAST, OBE_ABE));
+    EXPECT_EQ(NORTH, rule.calcWinner(trick, EAST, UNE_UFE));
 }
 
 TEST(RuleSchieberWinnerTest, trick2) {
@@ -36,7 +36,7 @@ TEST(RuleSchieberWinnerTest, trick2) {
     trick(2) = SQ;
     trick(3) = SK;
 
-    EXPECT_EQ(EAST, rule.calc_winner(trick, EAST, SPADES));
+    EXPECT_EQ(EAST, rule.calcWinner(trick, EAST, SPADES));
 }
 
 TEST(RuleSchieberWinnerTest, trick3) {
@@ -48,7 +48,7 @@ TEST(RuleSchieberWinnerTest, trick3) {
     trick(2) = SJ;
     trick(3) = SK;
 
-    EXPECT_EQ(EAST, rule.calc_winner(trick, WEST, SPADES));
+    EXPECT_EQ(EAST, rule.calcWinner(trick, WEST, SPADES));
 
 }
 
@@ -61,7 +61,7 @@ TEST(RuleSchieberWinnerTest, trick4) {
     trick(2) = SJ;
     trick(3) = SK;
 
-    EXPECT_EQ(WEST, rule.calc_winner(trick, EAST, SPADES));
+    EXPECT_EQ(WEST, rule.calcWinner(trick, EAST, SPADES));
 }
 
 TEST(RuleSchieberWinnerTest, trick5) {
@@ -73,9 +73,9 @@ TEST(RuleSchieberWinnerTest, trick5) {
     trick(2) = D7;
     trick(3) = SJ;
 
-    EXPECT_EQ(EAST, rule.calc_winner(trick, EAST, HEARTS));
-    EXPECT_EQ(WEST, rule.calc_winner(trick, EAST, DIAMONDS));
-    EXPECT_EQ(SOUTH, rule.calc_winner(trick, EAST, SPADES));
+    EXPECT_EQ(EAST, rule.calcWinner(trick, EAST, HEARTS));
+    EXPECT_EQ(WEST, rule.calcWinner(trick, EAST, DIAMONDS));
+    EXPECT_EQ(SOUTH, rule.calcWinner(trick, EAST, SPADES));
 }
 
 TEST(RuleSchieberWinnerTest, trick6) {
@@ -87,7 +87,7 @@ TEST(RuleSchieberWinnerTest, trick6) {
     trick(2) = D6;
     trick(3) = S9;
 
-    EXPECT_EQ(WEST, rule.calc_winner(trick, EAST, UNE_UFE));
+    EXPECT_EQ(WEST, rule.calcWinner(trick, EAST, UNE_UFE));
 }
 
 TEST(RuleSchieberWinnerTest, trick7) {
@@ -99,8 +99,8 @@ TEST(RuleSchieberWinnerTest, trick7) {
     trick(2) = D7;
     trick(3) = S9;
 
-    EXPECT_EQ(SOUTH, rule.calc_winner(trick, EAST, UNE_UFE));
-    EXPECT_EQ(EAST, rule.calc_winner(trick, EAST, OBE_ABE));
+    EXPECT_EQ(SOUTH, rule.calcWinner(trick, EAST, UNE_UFE));
+    EXPECT_EQ(EAST, rule.calcWinner(trick, EAST, OBE_ABE));
 }
 
 

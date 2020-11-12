@@ -15,10 +15,10 @@ TEST(const_tests, color){
     hand(C6) = 1;
     hand(SA) = 1;
 
-    EXPECT_TRUE(is_color_in_hand(hand, C));
-    EXPECT_TRUE(is_color_in_hand(hand, S));
-    EXPECT_FALSE(is_color_in_hand(hand, H));
-    EXPECT_FALSE(is_color_in_hand(hand, D));
+    EXPECT_TRUE(isColorInHand(hand, C));
+    EXPECT_TRUE(isColorInHand(hand, S));
+    EXPECT_FALSE(isColorInHand(hand, H));
+    EXPECT_FALSE(isColorInHand(hand, D));
 }
 
 TEST(const_tests, mask) {
@@ -28,12 +28,12 @@ TEST(const_tests, mask) {
     hand(SA) = 1;
     hand(S10) = 1;
 
-    auto masked = mask_color(hand, SPADES);
+    auto masked = maskColor(hand, SPADES);
     EXPECT_TRUE(masked(C6) == 0);
     EXPECT_TRUE(masked(SA) == 1);
     EXPECT_TRUE(masked(S10) == 1);
 
-    masked = mask_color(hand, C);
+    masked = maskColor(hand, C);
     EXPECT_TRUE(masked(C6) == 1);
     EXPECT_TRUE(masked(SA) == 0);
     EXPECT_TRUE(masked(S10) == 0);
@@ -46,7 +46,7 @@ TEST(const_tests, conversion) {
     hand(SA) = 1;
     hand(S10) = 1;
 
-    CardList list = card_set_to_list(hand);
+    CardList list = cardSetToList(hand);
 
     ASSERT_EQ(3, list.size());
     ASSERT_EQ(SA, list[0]);
@@ -57,7 +57,7 @@ TEST(const_tests, conversion) {
     list2.push_back(HK);
     list2.push_back(D8);
 
-    CardSet set = card_list_to_set(list2);
+    CardSet set = cardListToSet(list2);
 
     ASSERT_EQ(2, set.sum());
     ASSERT_EQ(1, set[HK]);

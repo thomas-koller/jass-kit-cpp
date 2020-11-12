@@ -19,16 +19,16 @@ TEST(RuleSchieberPointsTest, trump) {
     trick(2) = SQ;
     trick(3) = SJ;
 
-    EXPECT_EQ(20, rule.calc_points(trick, false, DIAMONDS));
-    EXPECT_EQ(25, rule.calc_points(trick, true, HEARTS));
-    EXPECT_EQ(38, rule.calc_points(trick, false, SPADES));
-    EXPECT_EQ(20, rule.calc_points(trick, false, CLUBS));
+    EXPECT_EQ(20, rule.calcPoints(trick, false, DIAMONDS));
+    EXPECT_EQ(25, rule.calcPoints(trick, true, HEARTS));
+    EXPECT_EQ(38, rule.calcPoints(trick, false, SPADES));
+    EXPECT_EQ(20, rule.calcPoints(trick, false, CLUBS));
 
     trick(0) = SA;
     trick(1) = SJ;
     trick(2) = S6;
     trick(3) = S9;
-    EXPECT_EQ(45, rule.calc_points(trick, false, SPADES));
+    EXPECT_EQ(45, rule.calcPoints(trick, false, SPADES));
 }
 
 TEST(RuleSchieberPointsTest, obe_une) {
@@ -40,14 +40,14 @@ TEST(RuleSchieberPointsTest, obe_une) {
     trick(2) = SQ;
     trick(3) = SJ;
 
-    EXPECT_EQ(20, rule.calc_points(trick, false, OBE_ABE));
-    EXPECT_EQ(14, rule.calc_points(trick, true, UNE_UFE));
+    EXPECT_EQ(20, rule.calcPoints(trick, false, OBE_ABE));
+    EXPECT_EQ(14, rule.calcPoints(trick, true, UNE_UFE));
 
     trick(0) = CA;
     trick(1) = S8;
     trick(2) = S6;
     trick(3) = H6;
-    EXPECT_EQ(19, rule.calc_points(trick, false, OBE_ABE));
-    EXPECT_EQ(30, rule.calc_points(trick, false, UNE_UFE));
+    EXPECT_EQ(19, rule.calcPoints(trick, false, OBE_ABE));
+    EXPECT_EQ(30, rule.calcPoints(trick, false, UNE_UFE));
 }
 

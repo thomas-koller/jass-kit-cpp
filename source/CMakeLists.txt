@@ -42,6 +42,7 @@ SET_TARGET_PROPERTIES( ${JASS_LIB_STATIC}
 install(TARGETS ${JASS_LIB} ${JASS_LIB_STATIC}
         EXPORT ${JASS_LIB}
         LIBRARY DESTINATION lib
+        ARCHIVE DESTINATION lib
        )
 
 # install with preserving structure

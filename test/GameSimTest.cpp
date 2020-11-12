@@ -23,32 +23,32 @@ TEST(GameSimTest, play_game) {
 
     // deal random hands
     GameUtils util;
-    auto hands = util.deal_random_hand();
+    auto hands = util.dealRandomHand();
 
-    game.init_from_cards(hands, 1);
-    game.perform_action_trump(PUSH);
-    game.perform_action_trump(DIAMONDS);
+    game.initFromCards(hands, 1);
+    game.performActionTrump(PUSH);
+    game.performActionTrump(DIAMONDS);
 
     // play game
     while (game.state.nr_played_cards < 35) {
-        rule->assert_invariants(game.state);
+        rule->assertInvariants(game.state);
         // get observations for all the players
         for (int player=0; player < 4; player++) {
-            GameObservation obs = observation_from_state(game.state, player);
-            rule->assert_invariants(obs);
+            GameObservation obs = observationFromState(game.state, player);
+            rule->assertInvariants(obs);
         }
 
-        auto validCards = rule->get_valid_cards_from_state(game.state);
+        auto validCards = rule->getValidCardsFromState(game.state);
 
-        auto validCardsList = card_set_to_list(validCards);
+        auto validCardsList = cardSetToList(validCards);
         int nrValid = (int)validCardsList.size();
 
         std::uniform_int_distribution<int> uniform_dist(0, nrValid-1);
         int index = uniform_dist(random_generator);
         int action = validCardsList[index];
 
-        game.perform_action_play_card(action);
-        rule->assert_invariants(game.state);
+        game.performActionPlayCard(action);
+        rule->assertInvariants(game.state);
     }
 
 }

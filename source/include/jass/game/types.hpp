@@ -47,6 +47,10 @@ namespace jass {
 
     // Card Distribution Probabilities
     typedef Eigen::Array<float, 4 /* rows */, NR_CARDS /* cols */> CardProbabilities;
+
+    // Dynamic 2D arrays in row major format
+    typedef Eigen::Array<float, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> ArrayXXf_rm;
+
 }
 
 

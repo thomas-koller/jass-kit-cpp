@@ -40,26 +40,26 @@ public:
             rule(std::move(rule))
     {}
 
-    void init_from_cards(const CardSetPlayer& hands, int dealer);
+    void initFromCards(const CardSetPlayer& hands, int dealer);
 
     /**
      * Perform a trump action and set the state accordingly. Actions are selecting a valid trump
      * or passing (push)
      * @param trump_action
      */
-    void perform_action_trump(int trump_action);
+    void performActionTrump(int trump_action);
 
     /**
      * Perform a action to play the given card by the current player. The state is updated accordingly.
      * @param card the card to play
      */
-    void perform_action_play_card(int card);
+    void performActionPlayCard(int card);
 
     /**
      * Return true if the game has finished.
      * @return true if the game has finished, false otherwise
      */
-    inline bool is_done() const {
+    inline bool isDone() const {
         return state.nr_played_cards == 36;
     }
 
@@ -68,7 +68,7 @@ private:
     /**
      * Calculate state at the end of a trick
      */
-    void end_trick();
+    void endTrick();
 
 };
 

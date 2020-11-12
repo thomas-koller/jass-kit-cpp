@@ -34,8 +34,8 @@ jass::ResultTrumpAction jass::JassAgentRandom::actionTrumpProb(const jass::GameO
 }
 
 int jass::JassAgentRandom::actionPlayCard(const jass::GameObservation &obs) {
-    auto validCards = rule.get_valid_cards_from_obs(obs);
-    auto validCardsList = card_set_to_list(validCards);
+    auto validCards = rule.getValidCardsFromObs(obs);
+    auto validCardsList = cardSetToList(validCards);
     int nrValid = (int)validCardsList.size();
 
     // lock access to random generator
@@ -49,7 +49,7 @@ int jass::JassAgentRandom::actionPlayCard(const jass::GameObservation &obs) {
 }
 
 jass::ResultPlayCardAction jass::JassAgentRandom::actionPlayCardProb(const jass::GameObservation &obs) {
-    auto validCards = rule.get_valid_cards_from_obs(obs);
+    auto validCards = rule.getValidCardsFromObs(obs);
     int nrValidCards = validCards.sum();
 
     // same probability for all

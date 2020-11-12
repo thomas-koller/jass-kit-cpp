@@ -51,7 +51,7 @@ public:
     typedef std::shared_ptr<GameObservation> Ptr;
     // we keep the data public (as in the python case) so as not to have a large number of trivial
     // getters and setters that would not be able to enforce data consistency anyway
-    // The method assert_invariants can be used to verify that the data is consistent.
+    // The method assertInvariants can be used to verify that the data is consistent.
 
     /// dealer of the round
     int dealer;
@@ -115,11 +115,12 @@ public:
         return !operator==(other);
     }
 
-    bool is_finished() const {
+    bool isFinished
+    () const {
         return nr_played_cards == 36;
     }
 
-    int points_own() const {
+    int pointsOwn() const {
         if (player == 0 || player == 2) {
             return points[0];
         } else {
@@ -127,7 +128,7 @@ public:
         }
     }
 
-    int points_opponent() const {
+    int pointsOpponent() const {
         if (player == 0 || player == 2) {
             return points[1];
         } else {

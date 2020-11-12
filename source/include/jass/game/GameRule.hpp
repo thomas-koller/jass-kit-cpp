@@ -34,18 +34,18 @@ public:
      * @param trump the declared trump color
      * @return the set of valid cards to play
      */
-    virtual CardSet get_valid_cards(const CardSet& hand, const CardTrick& trick, int card_nr, int trump) = 0;
+    virtual CardSet getValidCards(const CardSet& hand, const CardTrick& trick, int card_nr, int trump) = 0;
 
-    CardSet get_valid_cards_from_state(const GameState& state) {
-        return get_valid_cards(
+    CardSet getValidCardsFromState(const GameState& state) {
+        return getValidCards(
                 state.hands.row(state.player),
                 state.tricks.row(state.current_trick),
                 state.nr_cards_in_trick,
                 state.trump);
     }
 
-    CardSet get_valid_cards_from_obs(const GameObservation& obs) {
-        return get_valid_cards(
+    CardSet getValidCardsFromObs(const GameObservation& obs) {
+        return getValidCards(
                 obs.hand,
                 obs.tricks.row(obs.current_trick),
                 obs.nr_cards_in_trick,
@@ -61,7 +61,7 @@ public:
      * @param trump the declared trump
      * @return the number of points made
      */
-    virtual int calc_points(const CardTrick& trick, bool is_last_card, int trump) = 0;
+    virtual int calcPoints(const CardTrick& trick, bool is_last_card, int trump) = 0;
 
     /**
      * Calculate the winner of the complete trick
@@ -70,13 +70,13 @@ public:
      * @param trump the declared trump
      * @return the winner of the trick
      */
-    virtual int calc_winner(const CardTrick& trick, int first_player, int trump) = 0;
+    virtual int calcWinner(const CardTrick& trick, int first_player, int trump) = 0;
 
     /// check invariants for this rule and state
-    virtual void assert_invariants(const GameState &state) const = 0;
+    virtual void assertInvariants(const GameState &state) const = 0;
 
     /// check invariants for this rule and obs
-    virtual void assert_invariants(const GameObservation &obs) const = 0;
+    virtual void assertInvariants(const GameObservation &obs) const = 0;
 
 };
 

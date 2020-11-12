@@ -46,20 +46,20 @@ jass::RuleSchieber::RuleSchieber() {
 }
 
 
-jass::CardSet jass::RuleSchieber::get_valid_cards(const CardSet &hand, const CardTrick &trick, int card_nr, int trump) {
+jass::CardSet jass::RuleSchieber::getValidCards(const CardSet &hand, const CardTrick &trick, int card_nr, int trump) {
     // play anything on the first move
     if (card_nr == 0) {
         return hand;
     }
 
     // get the color of the first played card and check if we have that color
-    int color_played = color_of_card(trick(0));
-    bool have_color_played = is_color_in_hand(hand, color_played);
+    int color_played = colorOfCard(trick(0));
+    bool have_color_played = isColorInHand(hand, color_played);
 
     if (trump == OBE_ABE || trump == UNE_UFE){
         if (have_color_played) {
             // play a card of that color
-            return mask_color(hand, color_played);
+            return maskColor(hand, color_played);
         } else {
             // play any card
             return hand;
@@ -67,7 +67,7 @@ jass::CardSet jass::RuleSchieber::get_valid_cards(const CardSet &hand, const Car
     }
 
     // trump selected and not obe or une
-    CardSet trump_cards = mask_color(hand, trump);
+    CardSet trump_cards = maskColor(hand, trump);
 
     int nr_trumps_in_hand = trump_cards.sum();
     int nr_cards_in_hand = hand.sum();
@@ -83,7 +83,7 @@ jass::CardSet jass::RuleSchieber::get_valid_cards(const CardSet &hand, const Car
             // no more trumps, play anything
             return hand;
         }
-        if (nr_trumps_in_hand == 1 && hand(color_offset(trump) + J_offset)) {
+        if (nr_trumps_in_hand == 1 && hand(colorOffset(trump) + J_offset)) {
             // only trump J, play anything
             return hand;
         }
@@ -99,13 +99,13 @@ jass::CardSet jass::RuleSchieber::get_valid_cards(const CardSet &hand, const Car
 
     if (card_nr > 1) {
         // check player 1
-        if (color_of_card(trick(1)) == trump) {
+        if (colorOfCard(trick(1)) == trump) {
             trump_played = true;
             lowest_trump_played = trick(1);
         }
         // check player 2 (only if 3 cards played, player 2 is the last player before us then)
         if (card_nr == 3) {
-            if (color_of_card(trick(2)) == trump) {
+            if (colorOfCard(trick(2)) == trump) {
                 if (!trump_played){
                     // only trump from player 2, not from player 1
                     trump_played = true;
@@ -127,7 +127,7 @@ jass::CardSet jass::RuleSchieber::get_valid_cards(const CardSet &hand, const Car
         // there was not trump played by anybody
         if (have_color_played) {
             // play the color or trump
-            return mask_color(hand, color_played) + trump_cards;
+            return maskColor(hand, color_played) + trump_cards;
         } else {
             // play anything (including trump)
             return hand;
@@ -144,7 +144,7 @@ jass::CardSet jass::RuleSchieber::get_valid_cards(const CardSet &hand, const Car
         if (have_color_played){
             // give a color or a higher trump
             Eigen::Array<int, 36, 1> higher = higher_trump.row(lowest_trump_played);
-            return mask_color(hand, color_played) + (trump_cards * higher);
+            return maskColor(hand, color_played) + (trump_cards * higher);
         } else {
             // play anything but a lower trump cards
             Eigen::Array<int, 36, 1> lower = lower_trump.row(lowest_trump_played);
@@ -154,7 +154,7 @@ jass::CardSet jass::RuleSchieber::get_valid_cards(const CardSet &hand, const Car
     }
 }
 
-int jass::RuleSchieber::calc_points(const CardTrick &trick, bool is_last_card, int trump) {
+int jass::RuleSchieber::calcPoints(const CardTrick &trick, bool is_last_card, int trump) {
     int points =
             card_values(trump, trick(0)) +
             card_values(trump, trick(1)) +
@@ -168,15 +168,15 @@ int jass::RuleSchieber::calc_points(const CardTrick &trick, bool is_last_card, i
 
 }
 
-int jass::RuleSchieber::calc_winner(const CardTrick &trick, int first_player, int trump) {
-    int color_played = color_of_card(trick(0));
+int jass::RuleSchieber::calcWinner(const CardTrick &trick, int first_player, int trump) {
+    int color_played = colorOfCard(trick(0));
     int winner = 0;
 
     if (trump == UNE_UFE){
         // lowest card of first color wins
         int lowest_card = trick(0);
         for (int i = 1; i < 4; ++i) {
-            if (color_of_card(trick(i)) == color_played && trick(i) > lowest_card) {
+            if (colorOfCard(trick(i)) == color_played && trick(i) > lowest_card) {
                 lowest_card = trick(i);
                 winner = i;
             }
@@ -186,7 +186,7 @@ int jass::RuleSchieber::calc_winner(const CardTrick &trick, int first_player, in
         // highest card of first color wins
         int highest_card = trick(0);
         for (int i = 1; i < 4; ++i) {
-            if (color_of_card(trick(i)) == color_played && trick(i) < highest_card) {
+            if (colorOfCard(trick(i)) == color_played && trick(i) < highest_card) {
                 highest_card = trick(i);
                 winner = i;
             }
@@ -195,7 +195,7 @@ int jass::RuleSchieber::calc_winner(const CardTrick &trick, int first_player, in
         // trump mode and first card is trump: highest trump wins
         int highest_card = trick(0);
         for (int i = 1; i < 4; ++i) {
-            if (color_of_card(trick(i)) == trump && (lower_trump(trick(i), highest_card) == 1)) {
+            if (colorOfCard(trick(i)) == trump && (lower_trump(trick(i), highest_card) == 1)) {
                 highest_card = trick(i);
                 winner = i;
             }
@@ -207,7 +207,7 @@ int jass::RuleSchieber::calc_winner(const CardTrick &trick, int first_player, in
         int highest_trump = NO_CARD;
         bool trump_played = false;
         for (int i = 1; i < 4; ++i) {
-            if (color_of_card(trick(i)) == trump) {
+            if (colorOfCard(trick(i)) == trump) {
                 // trump played for that card
                 if (trump_played) {
                     // there was a trump before, check if the new one is higher
@@ -223,7 +223,7 @@ int jass::RuleSchieber::calc_winner(const CardTrick &trick, int first_player, in
                 }
             } else if (trump_played) {
                 // trump played previously, but this is not trump, so that can not be a winner
-            } else if (color_of_card(trick(i)) == color_played) {
+            } else if (colorOfCard(trick(i)) == color_played) {
                 // no trump played in trick, and this card has the correct color
                 if (trick(i) < highest_card) {
                     highest_card = trick(i);
@@ -238,7 +238,7 @@ int jass::RuleSchieber::calc_winner(const CardTrick &trick, int first_player, in
 }
 
 
-void jass::RuleSchieber::assert_invariants(const GameState& state) const {
+void jass::RuleSchieber::assertInvariants(const GameState& state) const {
     // only do something if debug is enabled, as asserts won't be tested otherwise anyway
 #ifndef NDEBUG
     // std::cout << state;
@@ -248,11 +248,11 @@ void jass::RuleSchieber::assert_invariants(const GameState& state) const {
         assert(state.dealer >= 0 && state.dealer <= 3);
         assert(state.trump >= 0 && state.trump <=5);
         if (state.forehand == 1) {
-            assert(state.declared_trump_player == next_player(state.dealer));
+            assert(state.declared_trump_player == nextPlayer(state.dealer));
         } else if (state.forehand == 0) {
-            assert(state.declared_trump_player == partner_player(next_player(state.dealer)));
+            assert(state.declared_trump_player == partnerPlayer(nextPlayer(state.dealer)));
         }
-        assert(state.trick_first_player[0] == next_player(state.dealer));
+        assert(state.trick_first_player[0] == nextPlayer(state.dealer));
 
 
         if (state.current_trick > 0) {
@@ -293,7 +293,7 @@ void jass::RuleSchieber::assert_invariants(const GameState& state) const {
     }
 }
 
-void jass::RuleSchieber::assert_invariants(const GameObservation& obs) const{
+void jass::RuleSchieber::assertInvariants(const GameObservation& obs) const{
 #ifndef NDEBUG
     //std::cout << obs;
 #endif
@@ -302,14 +302,14 @@ void jass::RuleSchieber::assert_invariants(const GameObservation& obs) const{
         assert(obs.dealer >= 0 && obs.dealer <= 3);
         assert(obs.trump >= 0 && obs.trump <= 5);
         if (obs.forehand == 1) {
-            assert(obs.declared_trump_player == next_player(obs.dealer));
+            assert(obs.declared_trump_player == nextPlayer(obs.dealer));
         } else if (obs.forehand == 0) {
-            assert(obs.declared_trump_player == partner_player(next_player(obs.dealer)));
+            assert(obs.declared_trump_player == partnerPlayer(nextPlayer(obs.dealer)));
         }
         // first player is only set after the first card of a trick
         // has been played
         if (obs.nr_played_cards > 0) {
-            assert(obs.trick_first_player[0] == next_player(obs.dealer));
+            assert(obs.trick_first_player[0] == nextPlayer(obs.dealer));
         }
 
         if (obs.current_trick > 0) {

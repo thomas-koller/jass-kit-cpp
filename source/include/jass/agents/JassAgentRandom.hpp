@@ -34,7 +34,6 @@ public:
 
     ResultPlayCardAction actionPlayCardProb(const jass::GameObservation &obs) override;
 
-public:
 };
 
 

@@ -18,6 +18,8 @@ namespace jass {
  */
 class jass::JassAgent {
 public:
+    typedef std::shared_ptr<JassAgent> Ptr;
+
     JassAgent() = default;
 
     JassAgent(const JassAgent&) = delete;

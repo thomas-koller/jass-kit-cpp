@@ -23,23 +23,23 @@ TEST(RuleSchieberTest, obe_une) {
     // no color, OBE
     trick(0) = CA;
 
-    auto valid = rule.get_valid_cards(hand, trick, 1, OBE_ABE);
+    auto valid = rule.getValidCards(hand, trick, 1, OBE_ABE);
     EXPECT_TRUE(valid.isApprox(hand));
 
     // no color, UNE
     trick(0) = C6;
-    valid = rule.get_valid_cards(hand, trick, 1, UNE_UFE);
+    valid = rule.getValidCards(hand, trick, 1, UNE_UFE);
     EXPECT_TRUE(valid.isApprox(hand));
 
     // color in hand
     trick(0) = SQ;
-    valid = rule.get_valid_cards(hand, trick, 1, OBE_ABE);
+    valid = rule.getValidCards(hand, trick, 1, OBE_ABE);
     CardSet expected = CardSet::Zero();
     expected(SA) = expected(SK) = 1;
     EXPECT_TRUE(expected.isApprox(valid));
 
     trick(0) = S7;
-    valid = rule.get_valid_cards(hand, trick, 1, OBE_ABE);
+    valid = rule.getValidCards(hand, trick, 1, OBE_ABE);
     EXPECT_TRUE(expected.isApprox(valid));
 }
 
@@ -49,16 +49,16 @@ TEST(RuleSchieberTest, first_move) {
     hand(SA) = hand(SK) = hand(H7) = hand(HJ) = hand(C6) = hand(C7) = hand(D10) = 1;
     CardTrick trick = CardTrick::Constant(-1);
 
-    auto valid = rule.get_valid_cards(hand, trick, 0, UNE_UFE);
+    auto valid = rule.getValidCards(hand, trick, 0, UNE_UFE);
     EXPECT_TRUE(valid.isApprox(hand));
 
-    valid = rule.get_valid_cards(hand, trick, 0, OBE_ABE);
+    valid = rule.getValidCards(hand, trick, 0, OBE_ABE);
     EXPECT_TRUE(valid.isApprox(hand));
 
-    valid = rule.get_valid_cards(hand, trick, 0, DIAMONDS);
+    valid = rule.getValidCards(hand, trick, 0, DIAMONDS);
     EXPECT_TRUE(valid.isApprox(hand));
 
-    valid = rule.get_valid_cards(hand, trick, 0, SPADES);
+    valid = rule.getValidCards(hand, trick, 0, SPADES);
     EXPECT_TRUE(valid.isApprox(hand));
 }
 
@@ -69,13 +69,13 @@ TEST(RuleSchieberTest, no_trump) {
     CardTrick trick = CardTrick::Constant(-1);
     trick(0) = D10;
 
-    auto valid = rule.get_valid_cards(hand, trick, 1, DIAMONDS);
+    auto valid = rule.getValidCards(hand, trick, 1, DIAMONDS);
     EXPECT_TRUE(valid.isApprox(hand));
 
     trick(0) = DJ;
     trick(1) = D9;
     trick(2) = D10;
-    valid = rule.get_valid_cards(hand, trick, 3, DIAMONDS);
+    valid = rule.getValidCards(hand, trick, 3, DIAMONDS);
     EXPECT_TRUE(valid.isApprox(hand));
 }
 
@@ -88,13 +88,13 @@ TEST(RuleSchieberTest, have_trump) {
 
     // give one of the trumps
     trick(0) = SJ;
-    auto valid = rule.get_valid_cards(hand, trick, 1, SPADES);
+    auto valid = rule.getValidCards(hand, trick, 1, SPADES);
     expected(SA) = expected(SK) = 1;
     EXPECT_TRUE(expected.isApprox(valid));
 
     // give one of the trumps (including jack)
     trick(0) = H10;
-    valid = rule.get_valid_cards(hand, trick, 1, HEARTS);
+    valid = rule.getValidCards(hand, trick, 1, HEARTS);
     expected = 0;
     expected(HJ) = expected(H7) = 1;
     EXPECT_TRUE(expected.isApprox(valid));
@@ -109,7 +109,7 @@ TEST(RuleSchieberTest, trump_jack) {
     // give one of the trumps
     trick(0) = H6;
     trick(1) = H8;
-    auto valid = rule.get_valid_cards(hand, trick, 2, HEARTS);
+    auto valid = rule.getValidCards(hand, trick, 2, HEARTS);
     EXPECT_TRUE(valid.isApprox(hand));
 }
 
@@ -123,7 +123,7 @@ TEST(RuleSchieberTest, other_color) {
     // give one of the trumps
     trick(0) = S10;
     trick(1) = C6;
-    auto valid = rule.get_valid_cards(hand, trick, 2, HEARTS);
+    auto valid = rule.getValidCards(hand, trick, 2, HEARTS);
     expected(SA) = expected(SK) = expected(HJ) = 1;
     EXPECT_TRUE(expected.isApprox(valid));
 }
@@ -139,7 +139,7 @@ TEST(RuleSchieberTest, other_color_trump_played_H) {
     trick(0) = C10;
     trick(1) = CA;
     trick(2) = H10;
-    auto valid = rule.get_valid_cards(hand, trick, 3, HEARTS);
+    auto valid = rule.getValidCards(hand, trick, 3, HEARTS);
     expected(C6) = expected(C7) = expected(HJ) = 1;
     EXPECT_TRUE(expected.isApprox(valid));
 
@@ -148,7 +148,7 @@ TEST(RuleSchieberTest, other_color_trump_played_H) {
     trick(0) = C10;
     trick(1) = CA;
     trick(2) = HA;
-    valid = rule.get_valid_cards(hand, trick, 3, HEARTS);
+    valid = rule.getValidCards(hand, trick, 3, HEARTS);
     EXPECT_TRUE(expected.isApprox(valid));
 }
 
@@ -163,14 +163,14 @@ TEST(RuleSchieberTest, other_color_trump_played_S) {
     trick(0) = HK;
     trick(1) = H8;
     trick(2) = SQ;
-    auto valid = rule.get_valid_cards(hand, trick, 3, SPADES);
+    auto valid = rule.getValidCards(hand, trick, 3, SPADES);
     expected(H8) = expected(H6) = expected(SA) = expected(SK) = 1;
     EXPECT_TRUE(expected.isApprox(valid));
 
     // no higher trump, only color allowed
     trick(0) = HK;
     trick(1) = SJ;
-    valid = rule.get_valid_cards(hand, trick, 2, SPADES);
+    valid = rule.getValidCards(hand, trick, 2, SPADES);
     expected = 0;
     expected(H8) = expected(H6) = 1;
     EXPECT_TRUE(expected.isApprox(valid));
@@ -187,7 +187,7 @@ TEST(RuleSchieberTest, other_color_trump_played_9) {
     trick(0) = C10;
     trick(1) = CA;
     trick(2) = H10;
-    auto valid = rule.get_valid_cards(hand, trick, 3, HEARTS);
+    auto valid = rule.getValidCards(hand, trick, 3, HEARTS);
     expected(C7) = expected(C6) = expected(H9) = 1;
     EXPECT_TRUE(expected.isApprox(valid));
 
@@ -195,7 +195,7 @@ TEST(RuleSchieberTest, other_color_trump_played_9) {
     trick(0) = C10;
     trick(1) = CA;
     trick(2) = HA;
-    valid = rule.get_valid_cards(hand, trick, 3, HEARTS);
+    valid = rule.getValidCards(hand, trick, 3, HEARTS);
     EXPECT_TRUE(expected.isApprox(valid));
 }
 
@@ -209,7 +209,7 @@ TEST(RuleSchieberTest, only_trump) {
     trick(0) = C10;
     trick(1) = DJ;
     trick(2) = H10;
-    auto valid = rule.get_valid_cards(hand, trick, 3, DIAMONDS);
+    auto valid = rule.getValidCards(hand, trick, 3, DIAMONDS);
     EXPECT_TRUE(valid.isApprox(hand));
 }
 
@@ -222,7 +222,7 @@ TEST(RuleSchieberTest, other_color_second_player) {
 
     // give color or trump
     trick(0) = C10;
-    auto valid = rule.get_valid_cards(hand, trick, 1, HEARTS);
+    auto valid = rule.getValidCards(hand, trick, 1, HEARTS);
     expected(C7) = expected(C6) = expected(H9) = expected(H8) = expected(H6) = 1;
     EXPECT_TRUE(expected.isApprox(valid));
 }

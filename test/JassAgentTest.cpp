@@ -27,22 +27,22 @@ TEST(JassAgentTest, play_game) {
 
     // deal random hands
     GameUtils util;
-    auto hands = util.deal_random_hand();
+    auto hands = util.dealRandomHand();
 
-    game.init_from_cards(hands, 1);
+    game.initFromCards(hands, 1);
 
-    int action = agent.actionTrump(observation_from_state(game.state, -1));
-    game.perform_action_trump(action);
+    int action = agent.actionTrump(observationFromState(game.state, -1));
+    game.performActionTrump(action);
 
     if (action == PUSH) {
-        action = agent.actionTrump(observation_from_state(game.state, -1));
-        game.perform_action_trump(action);
+        action = agent.actionTrump(observationFromState(game.state, -1));
+        game.performActionTrump(action);
     }
 
     // play game
     while (game.state.nr_played_cards < 36) {
-        rule->assert_invariants(game.state);
-        action = agent.actionPlayCard(observation_from_state(game.state, -1));
-        game.perform_action_play_card(action);
+        rule->assertInvariants(game.state);
+        action = agent.actionPlayCard(observationFromState(game.state, -1));
+        game.performActionPlayCard(action);
     }
 }

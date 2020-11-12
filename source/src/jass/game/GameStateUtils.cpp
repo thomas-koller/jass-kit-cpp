@@ -4,7 +4,7 @@
 
 #include "jass/game/GameStateUtils.hpp"
 
-std::vector<int> jass::calculate_points_from_tricks(const GameObservation& obs) {
+std::vector<int> jass::calculatePointsFromTricks(const GameObservation& obs) {
     std::vector<int> points(2);
     points[0] = 0;
     points[1] = 0;
@@ -20,7 +20,7 @@ std::vector<int> jass::calculate_points_from_tricks(const GameObservation& obs) 
 }
 
 
-jass::GameObservation jass::observation_from_state(const jass::GameState& state, int player) {
+jass::GameObservation jass::observationFromState(const jass::GameState& state, int player) {
     jass::GameObservation obs;
 
     obs.dealer = state.dealer;
@@ -47,4 +47,26 @@ jass::GameObservation jass::observation_from_state(const jass::GameState& state,
     obs.points = state.points;
 
     return obs;
+}
+jass::GameState jass::stateFromObservation(const jass::GameObservation& obs_in, const CardSetPlayer& hands) {
+    jass::GameState state;
+
+    state.dealer = obs_in.dealer;
+    state.player = obs_in.player;
+
+    state.trump = obs_in.trump;
+    state.forehand = obs_in.forehand;
+    state.declared_trump_player = obs_in.declared_trump_player;
+    state.hands = hands;
+
+    state.tricks = obs_in.tricks;
+    state.trick_winner = obs_in.trick_winner;
+    state.trick_points = obs_in.trick_points;
+    state.trick_first_player = obs_in.trick_first_player;
+    state.current_trick = obs_in.current_trick;
+    state.nr_cards_in_trick = obs_in.nr_cards_in_trick;
+    state.nr_played_cards = obs_in.nr_played_cards;
+    state.points = obs_in.points;
+
+    return state;
 }
