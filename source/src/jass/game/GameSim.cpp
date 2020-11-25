@@ -77,6 +77,9 @@ void jass::GameSim::performActionFull(int action) {
     if (action < TRUMP_FULL_OFFSET) {
         std::cout << "(card) (" << state.nr_played_cards << ")" << std::endl;
         performActionPlayCard(action);
+        if (this->isDone()) {
+            std::cout << "Sim done" << std::endl;
+        }
     } else {
         int trump_action = action - TRUMP_FULL_OFFSET;
         std::cout << "(trump: " << trump_action << ")" << std::endl;
