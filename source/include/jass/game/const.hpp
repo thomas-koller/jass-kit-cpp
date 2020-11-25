@@ -209,7 +209,7 @@ namespace jass {
  * @param set set with values set to 1
  * @return the list of the indices with values == 1
  */
-    inline std::vector<int> setToList(const Eigen::ArrayXd& set) {
+    inline std::vector<int> setToList(const Eigen::Ref<const Eigen::ArrayXi>& set) {
         std::vector<int> list;
 
         for (int i = 0; i < set.size(); i++) {

@@ -63,5 +63,15 @@ TEST(const_tests, conversion) {
     ASSERT_EQ(1, set[HK]);
     ASSERT_EQ(1, set[D8]);
     ASSERT_EQ(0, set[D7]);
+
+    ActionFullSet action = ActionFullSet::Zero();
+    action(10) = 1;
+    action(20) = 1;
+
+    auto action_list = setToList(action);
+    ASSERT_EQ(2, action_list.size());
+    ASSERT_EQ(10, action_list[0]);
+    ASSERT_EQ(20, action_list[1]);
+
 }
 

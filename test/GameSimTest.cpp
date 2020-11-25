@@ -50,5 +50,30 @@ TEST(GameSimTest, play_game) {
         game.performActionPlayCard(action);
         rule->assertInvariants(game.state);
     }
+}
 
+TEST(GameSimTest, action_full) {
+    std::random_device randomDevice;
+    std::mt19937 random_generator(randomDevice());
+
+    auto rule = std::make_shared<RuleSchieber>();
+    GameSim game(rule);
+
+    // deal random hands
+    GameUtils util;
+    auto hands = util.dealRandomHand();
+
+    game.initFromCards(hands, 1);
+
+    while (!game.isDone()) {
+        rule->assertInvariants(game.state);
+        auto valid_actions = rule->getFullValidActionsFromState(game.state);
+        auto valid_action_list = setToList(valid_actions);
+        int nrValid = (int)valid_action_list.size();
+        std::uniform_int_distribution<int> uniform_dist(0, nrValid-1);
+        int index = uniform_dist(random_generator);
+        int action = valid_action_list[index];
+        std::cout << action << std::endl;
+        game.performActionFull(action);
+    }
 }

@@ -89,11 +89,17 @@ public:
             }
         } else {
             // valid cards
-            action.segment<36>(0) = getValidCards(
+            std::cout << "cards" << std::endl;
+            auto cards = getValidCards(
                     state.hands.row(state.player),
                     state.tricks.row(state.current_trick),
                     state.nr_cards_in_trick,
                     state.trump);
+            action.segment<36>(0) = cards;
+            std::cout << "cards done" << std::endl;
+        }
+        if (action.sum() == 0) {
+            std::cout << "No valid actions in getFullValidActionsFromState" << std::endl;
         }
         return action;
     }
