@@ -45,11 +45,19 @@ namespace jass {
         Eigen::Array<float, 7, 1> reward;
     };
 
+    struct ResultActionFull {
+        Eigen::Array<float, 43, 1> probability;
+        Eigen::Array<float, 43, 1> reward;
+    };
+
     // Card Distribution Probabilities
     typedef Eigen::Array<float, 4 /* rows */, NR_CARDS /* cols */> CardProbabilities;
 
     // Dynamic 2D arrays in row major format
     typedef Eigen::Array<float, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> ArrayXXf_rm;
+
+    // Full action set for MCTS including trump
+    typedef Eigen::Array<int, 43, 1>  ActionFullSet;
 
 }
 

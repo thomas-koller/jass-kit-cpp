@@ -56,6 +56,12 @@ public:
     void performActionPlayCard(int card);
 
     /**
+     * Perform action from the full set of actions, including trump.
+     * @param action action to perform
+     */
+    void performActionFull(int action);
+
+    /**
      * Return true if the game has finished.
      * @return true if the game has finished, false otherwise
      */

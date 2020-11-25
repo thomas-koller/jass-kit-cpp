@@ -3,6 +3,8 @@
 //
 
 #include <gtest/gtest.h>
+#include <jass/game/GameSim.hpp>
+#include <jass/game/GameUtils.hpp>
 
 #include "jass/game/types.hpp"
 #include "jass/game/const.hpp"
@@ -227,6 +229,52 @@ TEST(RuleSchieberTest, other_color_second_player) {
     EXPECT_TRUE(expected.isApprox(valid));
 }
 
+TEST(RuleSchieberTest, trump_forehand) {
+    auto rule = std::make_shared<RuleSchieber>();
+    GameSim game(rule);
+
+    // deal random hands
+    GameUtils util;
+    auto hands = util.dealRandomHand();
+
+    game.initFromCards(hands, 1);
+
+    auto valid = rule->getFullValidActionsFromState(game.state);
+    EXPECT_EQ(7, valid.sum());
+    EXPECT_EQ(1, valid(TRUMP_FULL_O));
+    EXPECT_EQ(1, valid(TRUMP_FULL_U));
+    EXPECT_EQ(1, valid(TRUMP_FULL_D));
+    EXPECT_EQ(1, valid(TRUMP_FULL_C));
+    EXPECT_EQ(1, valid(TRUMP_FULL_H));
+    EXPECT_EQ(1, valid(TRUMP_FULL_S));
+    EXPECT_EQ(1, valid(TRUMP_FULL_P));
+
+    game.performActionTrump(PUSH);
+    // push should no longer be valid
+    valid = rule->getFullValidActionsFromState(game.state);
+    EXPECT_EQ(6, valid.sum());
+    EXPECT_EQ(1, valid(TRUMP_FULL_O));
+    EXPECT_EQ(1, valid(TRUMP_FULL_U));
+    EXPECT_EQ(1, valid(TRUMP_FULL_D));
+    EXPECT_EQ(1, valid(TRUMP_FULL_C));
+    EXPECT_EQ(1, valid(TRUMP_FULL_H));
+    EXPECT_EQ(1, valid(TRUMP_FULL_S));
+
+    game.performActionTrump(DIAMONDS);
+
+    // trump selection should no longer be valid
+    valid = rule->getFullValidActionsFromState(game.state);
+    EXPECT_EQ(0, valid(TRUMP_FULL_O));
+    EXPECT_EQ(0, valid(TRUMP_FULL_U));
+    EXPECT_EQ(0, valid(TRUMP_FULL_D));
+    EXPECT_EQ(0, valid(TRUMP_FULL_C));
+    EXPECT_EQ(0, valid(TRUMP_FULL_H));
+    EXPECT_EQ(0, valid(TRUMP_FULL_S));
+    EXPECT_EQ(0, valid(TRUMP_FULL_P));
+
+    auto valid2 = rule->getValidCardsFromState(game.state);
+    EXPECT_EQ(valid.sum(), valid2.sum());
+}
 
 
 

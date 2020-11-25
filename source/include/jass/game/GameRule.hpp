@@ -52,8 +52,6 @@ public:
                 obs.trump);
     }
 
-
-
     /**
      * Calculate the points from the cards in the trick
      * @param trick the complete trick
@@ -71,6 +69,63 @@ public:
      * @return the winner of the trick
      */
     virtual int calcWinner(const CardTrick& trick, int first_player, int trump) = 0;
+
+    /**
+     * Calculate valid actions from state including trump.
+     *
+     * @param state state of the game
+     * @return valid actions
+     */
+    inline ActionFullSet getFullValidActionsFromState(const GameState &state) {
+        ActionFullSet action = ActionFullSet::Zero();
+        if (state.trump == -1) {
+            // get trump action
+            if (state.forehand == -1) {
+                // all trump are possible including Push
+                action.segment<7>(TRUMP_FULL_OFFSET) = 1;
+            } else {
+                // Push is not available
+                action.segment<6>(TRUMP_FULL_OFFSET) = 1;
+            }
+        } else {
+            // valid cards
+            action.segment<36>(0) = getValidCards(
+                    state.hands.row(state.player),
+                    state.tricks.row(state.current_trick),
+                    state.nr_cards_in_trick,
+                    state.trump);
+        }
+        return action;
+    }
+
+    /**
+     * Calculate valid actions from obs including trump.
+     *
+     * @param obs game observation
+     * @return set of valid actions
+     */
+    inline ActionFullSet getFullValidActionsFromObs(const GameObservation &obs) {
+        ActionFullSet action = ActionFullSet::Zero();
+        if (obs.trump == -1) {
+            // get trump action
+            if (obs.forehand == -1) {
+                // all trump are possible including Push
+                action.segment<7>(TRUMP_FULL_OFFSET) = 1;
+            } else {
+                // Push is not available
+                action.segment<6>(TRUMP_FULL_OFFSET) = 1;
+            }
+        } else {
+            // valid cards
+            action.segment<36>(0) = getValidCards(
+                    obs.hand,
+                    obs.tricks.row(obs.current_trick),
+                    obs.nr_cards_in_trick,
+                    obs.trump);
+        }
+        return action;
+    }
+
 
     /// check invariants for this rule and state
     virtual void assertInvariants(const GameState &state) const = 0;

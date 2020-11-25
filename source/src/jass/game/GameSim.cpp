@@ -72,6 +72,15 @@ void jass::GameSim::performActionPlayCard(int card) {
     }
 }
 
+void jass::GameSim::performActionFull(int action) {
+    if (action < TRUMP_FULL_OFFSET) {
+        performActionPlayCard(action);
+    } else {
+        performActionTrump(action - TRUMP_FULL_OFFSET);
+    }
+}
+
+
 void jass::GameSim::endTrick() {
     // update information about the current trick
     int pts = rule->calcPoints(
@@ -107,3 +116,4 @@ void jass::GameSim::endTrick() {
         state.player = -1;
     }
 }
+

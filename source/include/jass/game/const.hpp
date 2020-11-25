@@ -37,6 +37,18 @@ namespace jass {
     // (is translated to PUSH when the action is added to the round)
     const int PUSH_ALT = 6;
 
+    // alternative values for trump for 'full' actions, i.e. both trump and cards are valid actions
+    const int TRUMP_FULL_OFFSET = 36;
+    const int TRUMP_FULL_D = TRUMP_FULL_OFFSET + DIAMONDS;
+    const int TRUMP_FULL_H = TRUMP_FULL_OFFSET + HEARTS;
+    const int TRUMP_FULL_S = TRUMP_FULL_OFFSET + SPADES;
+    const int TRUMP_FULL_C = TRUMP_FULL_OFFSET + CLUBS;
+    const int TRUMP_FULL_O = TRUMP_FULL_OFFSET + OBE_ABE;
+    const int TRUMP_FULL_U = TRUMP_FULL_OFFSET + UNE_UFE;
+    const int TRUMP_FULL_P = TRUMP_FULL_OFFSET + PUSH_ALT;
+
+    const int ACTION_SET_FULL_SIZE = TRUMP_FULL_P + 1;
+
     const int NO_TRUMP = -1;                // trump has not been declared yet
     const int NO_CARD = -1;                 // no card
 
@@ -189,6 +201,23 @@ namespace jass {
             cards[card] = 1;
         }
         return cards;
+    }
+
+    /**
+ * Create list (vector) from set.
+ *
+ * @param set set with values set to 1
+ * @return the list of the indices with values == 1
+ */
+    inline std::vector<int> setToList(const Eigen::ArrayXd& set) {
+        std::vector<int> list;
+
+        for (int i = 0; i < set.size(); i++) {
+            if (set[i] > 0) {
+                list.push_back(i);
+            }
+        }
+        return list;
     }
 
 
