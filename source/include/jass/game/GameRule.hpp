@@ -89,18 +89,18 @@ public:
             }
         } else {
             // valid cards
-            std::cout << "cards" << std::endl;
             auto cards = getValidCards(
                     state.hands.row(state.player),
                     state.tricks.row(state.current_trick),
                     state.nr_cards_in_trick,
                     state.trump);
             action.segment<36>(0) = cards;
-            std::cout << "cards done" << std::endl;
         }
+#ifndef NDEBUG
         if (action.sum() == 0) {
-            std::cout << "No valid actions in getFullValidActionsFromState" << std::endl;
+            std::cerr << "No valid actions in getFullValidActionsFromState" << std::endl;
         }
+#endif
         return action;
     }
 

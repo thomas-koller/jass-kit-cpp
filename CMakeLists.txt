@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 
 SET(PROJECTNAME Jass)
+
 project(${PROJECTNAME}
         VERSION 1.1.0)
 
@@ -39,9 +40,15 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
                  EXCLUDE_FROM_ALL)
 
 include_directories("${gtest_SOURCE_DIR}/include")
-#
+
+# add flags for release/debug build
+set (CMAKE_CXX_FLAGS_RELEASE_INIT "-DNDEBUG")
+set (CMAKE_CXX_FLAGS "-fPIC")
+
+# main source
 set (MY_SOURCE_DIR "source")
 include_directories(${MY_SOURCE_DIR}/include)
+
 add_subdirectory(${MY_SOURCE_DIR})
 
 # tests
