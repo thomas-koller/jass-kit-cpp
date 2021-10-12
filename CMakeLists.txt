@@ -41,13 +41,23 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
 
 include_directories("${gtest_SOURCE_DIR}/include")
 
+#
+# pybind11
+#
+add_subdirectory("extern/pybind11")
+
+include_directories("extern/pybind11/include")
+
 # add flags for release/debug build
 set (CMAKE_CXX_FLAGS_RELEASE_INIT "-DNDEBUG")
-set (CMAKE_CXX_FLAGS "-fPIC")
+
+set (CMAKE_CXX_FLAGS "-fPIC -DPYBIND11_PYTHON_VERSION=3.8 -undefined dynamic_lookup")
 
 # main source
 set (MY_SOURCE_DIR "source")
 include_directories(${MY_SOURCE_DIR}/include)
+include_directories("/Users/toko/opt/anaconda3/include/python3.8")
+link_directories("/Users/toko/opt/anaconda3/include/python3.8")
 
 add_subdirectory(${MY_SOURCE_DIR})
 

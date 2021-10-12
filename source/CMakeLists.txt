@@ -9,8 +9,9 @@ set (INCLUDE_FILES
         include/jass/game/GameStateUtils.hpp
         include/jass/game/GameUtils.hpp
         include/jass/agents/JassAgent.hpp
-        include/jass/agents/JassAgentRandom.hpp)
-
+        include/jass/agents/JassAgentRandom.hpp
+        include/jass/interface/IJassKit.hpp
+        )
 
 set (SOURCE_FILES
         src/jass/game/RuleSchieber.cpp
@@ -18,14 +19,17 @@ set (SOURCE_FILES
         src/jass/game/GameObservation.cpp
         src/jass/game/GameState.cpp
         src/jass/agents/JassAgentRandom.cpp
-        src/jass/game/GameStateUtils.cpp)
+        src/jass/game/GameStateUtils.cpp
+        src/jass/interface/GameSimModule.cpp)
 
 set (JASS_LIB jass)
 set (JASS_LIB_STATIC jass_static)
 
 
-add_library(${JASS_LIB} SHARED ${SOURCE_FILES})
+add_library(${JASS_LIB} SHARED ${SOURCE_FILES}  )
 add_library(${JASS_LIB_STATIC}  ${SOURCE_FILES})
+
+pybind11_add_module(jasscpp ${SOURCE_FILES})
 
 SET_TARGET_PROPERTIES( ${JASS_LIB}
         PROPERTIES
