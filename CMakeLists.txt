@@ -51,7 +51,8 @@ include_directories("extern/pybind11/include")
 # add flags for release/debug build
 set (CMAKE_CXX_FLAGS_RELEASE_INIT "-DNDEBUG")
 
-set (CMAKE_CXX_FLAGS "-fPIC -DPYBIND11_PYTHON_VERSION=3.8 -undefined dynamic_lookup")
+#set (CMAKE_CXX_FLAGS "-fPIC -DPYBIND11_PYTHON_VERSION=3.8 -undefined dynamic_lookup")
+set (CMAKE_CXX_FLAGS "-fPIC -DPYBIND11_PYTHON_VERSION=3.8")
 
 # main source
 set (MY_SOURCE_DIR "source")
