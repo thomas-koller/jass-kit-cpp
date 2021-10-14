@@ -69,6 +69,22 @@ public:
         return state.nr_played_cards == 36;
     }
 
+    /**
+     * Get valid cards from current state
+     * @return the valid cards from current state
+     */
+    inline CardSet getValidCards() const {
+        return rule->getValidCardsFromState(state);
+    }
+
+    /**
+    * Get valid actions from current state
+    * @return the valid actions from current state
+    */
+    inline ActionFullSet getFullValidActionsFromState() const {
+        return rule->getFullValidActionsFromState(state);
+    }
+
 
 private:
     /**
