@@ -29,3 +29,6 @@ while not game.is_done():
     # check that card removed from original hands, and hands from the game are the same
     hands[player, card] = 0
     assert (hands == game.state.hands).all()
+
+    # test access to points, which is a vector
+    print(game.state.points)

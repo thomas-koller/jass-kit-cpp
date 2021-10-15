@@ -8,7 +8,12 @@
 #include <jass/game/RuleSchieber.hpp>
 #include <jass/game/GameUtils.hpp>
 #include <jass/game/GameStateUtils.hpp>
+
+// for automatic conversion of eigen matrix and vector classes
 #include <pybind11/eigen.h>
+
+// for automatic conversion of stl vectors
+#include <pybind11/stl.h>
 
 namespace py = pybind11;
 
