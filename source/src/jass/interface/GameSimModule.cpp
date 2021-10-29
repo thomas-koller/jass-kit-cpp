@@ -4,6 +4,7 @@
 
 #include <pybind11/pybind11.h>
 #include <iostream>
+#include <jass/game/types.hpp>
 #include <jass/game/GameSim.hpp>
 #include <jass/game/RuleSchieber.hpp>
 #include <jass/game/GameUtils.hpp>
@@ -30,6 +31,28 @@ namespace py = pybind11;
 PYBIND11_MODULE(jasscpp, m) {
     m.doc() = "Binding to cpp jass interface";
     py::class_<jass::GameState>(m, "GameStateCpp")
+            .def(py::init([](){return jass::GameState();}))
+            .def(py::init([](int dealer, int player, int trump, int declared_trump_player,
+                    int forehand, const jass::CardSetPlayer &hands, const jass::CardAllTricks &tricks,
+                    const jass::TrickWinner &trick_winner, const jass::TrickPlayer &trick_first_player,
+                    const jass::TrickPoints &trick_points, int current_trick, int nr_cards_in_trick,
+                    int nr_played_cards, const std::vector<int> &points){
+                auto s = jass::GameState();
+                s.dealer = dealer;
+                s.player = player;
+                s.trump = trump;
+                s.declared_trump_player = declared_trump_player;
+                s.forehand = forehand;
+                s.hands = hands;
+                s.tricks = tricks;
+                s.trick_winner = trick_winner;
+                s.trick_first_player = trick_first_player;
+                s.trick_points = trick_points;
+                s.current_trick = current_trick;
+                s.nr_cards_in_trick = nr_cards_in_trick;
+                s.nr_played_cards = nr_played_cards;
+                s.points = points;
+                return s;}))
             .def_readwrite("dealer", &jass::GameState::dealer)
             .def_readwrite("player", &jass::GameState::player)
             .def_readwrite("trump", &jass::GameState::trump)
@@ -112,6 +135,7 @@ PYBIND11_MODULE(jasscpp, m) {
                     "perform a full action, either trump or play card",
                     py::arg("action"))
             .def("get_valid_cards", &jass::GameSim::getValidCards)
+            .def("get_valid_actions", &jass::GameSim::getFullValidActionsFromState)
             .def("is_done", &jass::GameSim::isDone)
             .def_readwrite("state", &jass::GameSim::state);
 
