@@ -10,6 +10,7 @@ set (INCLUDE_FILES
         include/jass/game/GameUtils.hpp
         include/jass/agents/JassAgent.hpp
         include/jass/agents/JassAgentRandom.hpp
+        include/jass/agents/JassAgentCheating.hpp
         )
 
 set (SOURCE_FILES
