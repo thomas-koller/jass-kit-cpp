@@ -31,27 +31,27 @@ namespace py = pybind11;
 PYBIND11_MODULE(jasscpp, m) {
     m.doc() = "Binding to cpp jass interface";
     py::class_<jass::GameState>(m, "GameStateCpp")
-            .def(py::init([](){return jass::GameState();}))
+            .def(py::init([](){return new jass::GameState();}))
             .def(py::init([](int dealer, int player, int trump, int declared_trump_player,
                     int forehand, const jass::CardSetPlayer &hands, const jass::CardAllTricks &tricks,
                     const jass::TrickWinner &trick_winner, const jass::TrickPlayer &trick_first_player,
                     const jass::TrickPoints &trick_points, int current_trick, int nr_cards_in_trick,
                     int nr_played_cards, const std::vector<int> &points){
-                auto s = jass::GameState();
-                s.dealer = dealer;
-                s.player = player;
-                s.trump = trump;
-                s.declared_trump_player = declared_trump_player;
-                s.forehand = forehand;
-                s.hands = hands;
-                s.tricks = tricks;
-                s.trick_winner = trick_winner;
-                s.trick_first_player = trick_first_player;
-                s.trick_points = trick_points;
-                s.current_trick = current_trick;
-                s.nr_cards_in_trick = nr_cards_in_trick;
-                s.nr_played_cards = nr_played_cards;
-                s.points = points;
+                auto s = new jass::GameState();
+                s->dealer = dealer;
+                s->player = player;
+                s->trump = trump;
+                s->declared_trump_player = declared_trump_player;
+                s->forehand = forehand;
+                s->hands = hands;
+                s->tricks = tricks;
+                s->trick_winner = trick_winner;
+                s->trick_first_player = trick_first_player;
+                s->trick_points = trick_points;
+                s->current_trick = current_trick;
+                s->nr_cards_in_trick = nr_cards_in_trick;
+                s->nr_played_cards = nr_played_cards;
+                s->points = points;
                 return s;}))
             .def_readwrite("dealer", &jass::GameState::dealer)
             .def_readwrite("player", &jass::GameState::player)
@@ -88,6 +88,34 @@ PYBIND11_MODULE(jasscpp, m) {
             });
 
     py::class_<jass::GameObservation>(m, "GameObservationCpp")
+            .def(py::init([](){return new jass::GameObservation();}))
+            .def(py::init([](
+                    int dealer, int player, int trump,
+                    int declared_trump_player, int forehand,
+                    const jass::CardSet &hand,
+                    const jass::CardAllTricks &tricks,
+                    const jass::TrickWinner &trick_winner,
+                    const jass::TrickPlayer &trick_first_player,
+                    const jass::TrickPoints &trick_points,
+                    int current_trick, int nr_cards_in_trick,
+                    int nr_played_cards,
+                    const std::vector<int> &points){
+                auto o = new jass::GameObservation();
+                o->dealer = dealer;
+                o->player = player;
+                o->trump = trump;
+                o->declared_trump_player = declared_trump_player;
+                o->forehand = forehand;
+                o->hand = hand;
+                o->tricks = tricks;
+                o->trick_winner = trick_winner;
+                o->trick_first_player = trick_first_player;
+                o->trick_points = trick_points;
+                o->current_trick = current_trick;
+                o->nr_cards_in_trick = nr_cards_in_trick;
+                o->nr_played_cards = nr_played_cards;
+                o->points = points;
+                return o;}))
             .def_readwrite("dealer", &jass::GameObservation::dealer)
             .def_readwrite("player", &jass::GameObservation::player)
             .def_readwrite("trump", &jass::GameObservation::trump)
@@ -123,7 +151,7 @@ PYBIND11_MODULE(jasscpp, m) {
             });
 
     py::class_<jass::GameSim>(m, "GameSimCpp")
-            .def(py::init([](){auto rule = std::make_shared<jass::RuleSchieber>();return jass::GameSim(rule);}))
+            .def(py::init([](){auto rule = std::make_shared<jass::RuleSchieber>();return new jass::GameSim(rule);}))
             .def("init_from_cards", &jass::GameSim::initFromCards,
                     "Initialise the game from given cards",
                     py::arg("hands"), py::arg("dealer"))
@@ -140,7 +168,8 @@ PYBIND11_MODULE(jasscpp, m) {
             .def_readwrite("state", &jass::GameSim::state);
 
     py::class_<jass::RuleSchieber>(m, "RuleSchieberCpp")
-            .def(py::init())
+            .def(py::init([](){
+                return new jass::RuleSchieber();}))
             .def("get_valid_cards", &jass::RuleSchieber::getValidCards)
             .def("get_valid_cards_from_state", &jass::RuleSchieber::getValidCardsFromState)
             .def("get_valid_cards_from_obs", &jass::RuleSchieber::getFullValidActionsFromObs)
@@ -149,7 +178,7 @@ PYBIND11_MODULE(jasscpp, m) {
 
 
     py::class_<jass::GameUtils>(m, "GameUtilsCpp")
-            .def(py::init())
+            .def(py::init([](){return new jass::GameUtils();}))
             .def("deal_random_hand", &jass::GameUtils::dealRandomHand)
             .def("deal_hands", &jass::GameUtils::dealHands);
 
