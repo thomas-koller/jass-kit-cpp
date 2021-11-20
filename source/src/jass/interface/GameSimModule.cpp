@@ -153,6 +153,22 @@ PYBIND11_MODULE(jasscpp, m) {
             .def("deal_random_hand", &jass::GameUtils::dealRandomHand)
             .def("deal_hands", &jass::GameUtils::dealHands);
 
+    // return values for probabilities
+    py::class_<jass::ResultPlayCardAction>(m, "ResultPlayCardActionCpp")
+            .def(py::init([] () { return jass::ResultPlayCardAction();}))
+            .def_readwrite("probability", &jass::ResultPlayCardAction::probability)
+            .def_readwrite("reward", &jass::ResultPlayCardAction::reward);
+
+    py::class_<jass::ResultTrumpAction>(m, "ResultTrumpActionCpp")
+            .def(py::init([] () { return jass::ResultTrumpAction();}))
+            .def_readwrite("probability", &jass::ResultTrumpAction::probability)
+            .def_readwrite("reward", &jass::ResultTrumpAction::reward);
+
+    py::class_<jass::ResultActionFull>(m, "ResultActionFullCpp")
+            .def(py::init([] () { return jass::ResultActionFull();}))
+            .def_readwrite("probability", &jass::ResultActionFull::probability)
+            .def_readwrite("reward", &jass::ResultActionFull::reward);
+
     m.def("observation_from_state", &jass::observationFromState);
     m.def("state_from_observation", &jass::stateFromObservation);
 }
