@@ -33,7 +33,7 @@ set (JASS_LIB_STATIC jass_static)
 add_library(${JASS_LIB} SHARED ${SOURCE_FILES}  )
 add_library(${JASS_LIB_STATIC}  ${SOURCE_FILES})
 
-# pybind11_add_module(jasscpp ${SOURCE_FILES} ${SOURCE_FILES_PYBIND})
+pybind11_add_module(jasscpp ${SOURCE_FILES} ${SOURCE_FILES_PYBIND})
 
 SET_TARGET_PROPERTIES( ${JASS_LIB}
         PROPERTIES
