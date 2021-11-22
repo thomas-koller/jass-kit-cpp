@@ -27,10 +27,10 @@ include_directories("${gtest_SOURCE_DIR}/include")
 add_subdirectory("extern/pybind11")
 include_directories("extern/pybind11/include")
 
-set(PYTHONVERSION "3.7")
+#set(PYTHONVERSION "3.7")
 # None of the lines below works
-add_definitions(-DPYBIND11_PYTHON_VERSION="${PYTHONVERSION}")
-set(PYBIND11_PYTHON_VERSION ${PYTHONVERSION})
+#add_definitions(-DPYBIND11_PYTHON_VERSION="${PYTHONVERSION}")
+#set(PYBIND11_PYTHON_VERSION ${PYTHONVERSION})
 
 # add flags for release/debug build
 set (CMAKE_CXX_FLAGS_RELEASE_INIT "-DNDEBUG")
