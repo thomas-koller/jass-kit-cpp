@@ -34,18 +34,18 @@ public:
      * @param trump the declared trump color
      * @return the set of valid cards to play
      */
-    virtual CardSet getValidCards(const CardSet& hand, const CardTrick& trick, int card_nr, int trump) = 0;
+    virtual CardSet get_valid_cards(const CardSet& hand, const CardTrick& trick, int card_nr, int trump) = 0;
 
-    CardSet getValidCardsFromState(const GameState& state) {
-        return getValidCards(
+    CardSet get_valid_cards_from_state(const GameState& state) {
+        return get_valid_cards(
                 state.hands.row(state.player),
                 state.tricks.row(state.current_trick),
                 state.nr_cards_in_trick,
                 state.trump);
     }
 
-    CardSet getValidCardsFromObs(const GameObservation& obs) {
-        return getValidCards(
+    CardSet get_valid_cards_from_obs(const GameObservation& obs) {
+        return get_valid_cards(
                 obs.hand,
                 obs.tricks.row(obs.current_trick),
                 obs.nr_cards_in_trick,
@@ -59,7 +59,7 @@ public:
      * @param trump the declared trump
      * @return the number of points made
      */
-    virtual int calcPoints(const CardTrick& trick, bool is_last_card, int trump) = 0;
+    virtual int calc_points(const CardTrick& trick, bool is_last_card, int trump) = 0;
 
     /**
      * Calculate the winner of the complete trick
@@ -68,7 +68,7 @@ public:
      * @param trump the declared trump
      * @return the winner of the trick
      */
-    virtual int calcWinner(const CardTrick& trick, int first_player, int trump) = 0;
+    virtual int calc_winner(const CardTrick& trick, int first_player, int trump) = 0;
 
     /**
      * Calculate valid actions from state including trump.
@@ -76,7 +76,7 @@ public:
      * @param state state of the game
      * @return valid actions
      */
-    inline ActionFullSet getFullValidActionsFromState(const GameState &state) {
+    inline ActionFullSet get_full_valid_actions_from_state(const GameState &state) {
         ActionFullSet action = ActionFullSet::Zero();
         if (state.trump == -1) {
             // get trump action
@@ -89,7 +89,7 @@ public:
             }
         } else {
             // valid cards
-            auto cards = getValidCards(
+            auto cards = get_valid_cards(
                     state.hands.row(state.player),
                     state.tricks.row(state.current_trick),
                     state.nr_cards_in_trick,
@@ -110,7 +110,7 @@ public:
      * @param obs game observation
      * @return set of valid actions
      */
-    inline ActionFullSet getFullValidActionsFromObs(const GameObservation &obs) {
+    inline ActionFullSet get_full_valid_actions_from_obs(const GameObservation &obs) {
         ActionFullSet action = ActionFullSet::Zero();
         if (obs.trump == -1) {
             // get trump action
@@ -123,7 +123,7 @@ public:
             }
         } else {
             // valid cards
-            action.segment<36>(0) = getValidCards(
+            action.segment<36>(0) = get_valid_cards(
                     obs.hand,
                     obs.tricks.row(obs.current_trick),
                     obs.nr_cards_in_trick,
@@ -134,10 +134,10 @@ public:
 
 
     /// check invariants for this rule and state
-    virtual void assertInvariants(const GameState &state) const = 0;
+    virtual void assert_invariants(const GameState &state) const = 0;
 
     /// check invariants for this rule and obs
-    virtual void assertInvariants(const GameObservation &obs) const = 0;
+    virtual void assert_invariants(const GameObservation &obs) const = 0;
 
 };
 

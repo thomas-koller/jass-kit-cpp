@@ -26,7 +26,7 @@ public:
     random_generator(std::random_device()())
     {}
 
-    CardSetPlayer dealRandomHand(){
+    CardSetPlayer deal_random_hand(){
         // create a vector of values from 0 to 35 and shuffle them
         // (cannot be done in Eigen, as there are no iterators)
         std::vector<int> values(36);
@@ -45,7 +45,7 @@ public:
         return hands;
     }
 
-    static CardSetPlayer dealHands(const CardList &north,
+    static CardSetPlayer deal_hands(const CardList &north,
                                    const CardList &east,
                                    const CardList &south,
                                    const CardList &west) {

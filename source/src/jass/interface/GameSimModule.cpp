@@ -152,35 +152,35 @@ PYBIND11_MODULE(jasscpp, m) {
 
     py::class_<jass::GameSim>(m, "GameSimCpp")
             .def(py::init([](){auto rule = std::make_shared<jass::RuleSchieber>();return new jass::GameSim(rule);}))
-            .def("init_from_cards", &jass::GameSim::initFromCards,
+            .def("init_from_cards", &jass::GameSim::init_from_cards,
                     "Initialise the game from given cards",
                     py::arg("hands"), py::arg("dealer"))
-            .def("perform_action_play_card", &jass::GameSim::performActionPlayCard,
+            .def("perform_action_play_card", &jass::GameSim::perform_action_play_card,
                     "play a card in the simulation", py::arg("card"))
-            .def("perform_action_trump", &jass::GameSim::performActionTrump,
+            .def("perform_action_trump", &jass::GameSim::perform_action_trump,
                     "select trump in the simulation", py::arg("trump"))
-            .def("perform_action_full", &jass::GameSim::performActionFull,
+            .def("perform_action_full", &jass::GameSim::perform_action_full,
                     "perform a full action, either trump or play card",
                     py::arg("action"))
-            .def("get_valid_cards", &jass::GameSim::getValidCards)
-            .def("get_valid_actions", &jass::GameSim::getFullValidActionsFromState)
-            .def("is_done", &jass::GameSim::isDone)
+            .def("get_valid_cards", &jass::GameSim::get_valid_cards)
+            .def("get_valid_actions", &jass::GameSim::get_full_valid_actions_from_state)
+            .def("is_done", &jass::GameSim::is_done)
             .def_readwrite("state", &jass::GameSim::state);
 
     py::class_<jass::RuleSchieber>(m, "RuleSchieberCpp")
             .def(py::init([](){
                 return new jass::RuleSchieber();}))
-            .def("get_valid_cards", &jass::RuleSchieber::getValidCards)
-            .def("get_valid_cards_from_state", &jass::RuleSchieber::getValidCardsFromState)
-            .def("get_valid_cards_from_obs", &jass::RuleSchieber::getFullValidActionsFromObs)
-            .def("get_full_valid_actions_from_state", &jass::RuleSchieber::getFullValidActionsFromState)
-            .def("get_full_valid_actions_from_obs", &jass::RuleSchieber::getFullValidActionsFromObs);
+            .def("get_valid_cards", &jass::RuleSchieber::get_valid_cards)
+            .def("get_valid_cards_from_state", &jass::RuleSchieber::get_valid_cards_from_state)
+            .def("get_valid_cards_from_obs", &jass::RuleSchieber::get_full_valid_actions_from_obs)
+            .def("get_full_valid_actions_from_state", &jass::RuleSchieber::get_full_valid_actions_from_state)
+            .def("get_full_valid_actions_from_obs", &jass::RuleSchieber::get_full_valid_actions_from_obs);
 
 
     py::class_<jass::GameUtils>(m, "GameUtilsCpp")
             .def(py::init([](){return new jass::GameUtils();}))
-            .def("deal_random_hand", &jass::GameUtils::dealRandomHand)
-            .def("deal_hands", &jass::GameUtils::dealHands);
+            .def("deal_random_hand", &jass::GameUtils::deal_random_hand)
+            .def("deal_hands", &jass::GameUtils::deal_hands);
 
     // return values for probabilities
     py::class_<jass::ResultPlayCardAction>(m, "ResultPlayCardActionCpp")
@@ -198,6 +198,6 @@ PYBIND11_MODULE(jasscpp, m) {
             .def_readwrite("probability", &jass::ResultActionFull::probability)
             .def_readwrite("reward", &jass::ResultActionFull::reward);
 
-    m.def("observation_from_state", &jass::observationFromState);
-    m.def("state_from_observation", &jass::stateFromObservation);
+    m.def("observation_from_state", &jass::observation_from_state);
+    m.def("state_from_observation", &jass::state_from_observation);
 }

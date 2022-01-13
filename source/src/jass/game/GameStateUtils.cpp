@@ -4,7 +4,7 @@
 
 #include "jass/game/GameStateUtils.hpp"
 
-std::vector<int> jass::calculatePointsFromTricks(const GameObservation& obs) {
+std::vector<int> jass::calculate_points_from_tricks(const GameObservation& obs) {
     std::vector<int> points(2);
     points[0] = 0;
     points[1] = 0;
@@ -20,7 +20,7 @@ std::vector<int> jass::calculatePointsFromTricks(const GameObservation& obs) {
 }
 
 
-jass::GameObservation jass::observationFromState(const jass::GameState& state, int player) {
+jass::GameObservation jass::observation_from_state(const jass::GameState& state, int player) {
     jass::GameObservation obs;
 
     obs.dealer = state.dealer;
@@ -48,7 +48,7 @@ jass::GameObservation jass::observationFromState(const jass::GameState& state, i
 
     return obs;
 }
-jass::GameState jass::stateFromObservation(const jass::GameObservation& obs_in, const CardSetPlayer& hands) {
+jass::GameState jass::state_from_observation(const jass::GameObservation& obs_in, const CardSetPlayer& hands) {
     jass::GameState state;
 
     state.dealer = obs_in.dealer;

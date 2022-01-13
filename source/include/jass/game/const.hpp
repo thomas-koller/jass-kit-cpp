@@ -108,17 +108,17 @@ namespace jass {
     const int Seven_offset = 7;
     const int Six_offset = 8;
 
-    inline int nextPlayer(int player) {
+    inline int next_player(int player) {
         static int next_player_array[] = {3, 0, 1, 2};
         return next_player_array[player];
     }
 
-    inline int partnerPlayer(int player) {
+    inline int partner_player(int player) {
         static int partner_player_array[] = {2, 3, 0, 1};
         return partner_player_array[player];
     }
 
-    inline int teamOfPlayer(int player) {
+    inline int team_of_player(int player) {
         static int team_of_player_array[] = {0, 1, 0, 1};
         return team_of_player_array[player];
     }
@@ -128,7 +128,7 @@ namespace jass {
      * @param card the card
      * @return the color of that card
      */
-    inline int colorOfCard(int card) {
+    inline int color_of_card(int card) {
         assert(card <= 36);
         static int color_of_card_array[] = {0, 0, 0, 0, 0, 0, 0, 0, 0,
                                             1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -142,7 +142,7 @@ namespace jass {
      * @param color
      * @return
      */
-    inline int colorOffset(int color){
+    inline int color_offset(int color){
         static int color_offset_array[] = {0, 9, 18, 27};
         return color_offset_array[color];
     }
@@ -153,8 +153,8 @@ namespace jass {
      * @param color the color
      * @return true if there is a card of that color
      */
-    inline bool isColorInHand(const CardSet &hand, int color){
-        int offset = colorOffset(color);
+    inline bool is_color_in_hand(const CardSet &hand, int color){
+        int offset = color_offset(color);
         return (hand.segment(offset, 9) == 1).any();
     }
 
@@ -164,9 +164,9 @@ namespace jass {
      * @param color color
      * @return
      */
-    inline CardSet maskColor(const CardSet& hand, int color) {
+    inline CardSet mask_color(const CardSet& hand, int color) {
         CardSet value = CardSet::Zero();
-        int offset  = colorOffset(color);
+        int offset  = color_offset(color);
         value.segment(offset, 9) = hand.segment(offset, 9);
         return value;
     }
@@ -177,7 +177,7 @@ namespace jass {
      * @param cards a card set
      * @return the list of cards in the set
      */
-    inline CardList cardSetToList(const CardSet& cards) {
+    inline CardList card_set_to_list(const CardSet& cards) {
         CardList list;
 
         for (int i = 0; i < NR_CARDS; i++) {
@@ -209,7 +209,7 @@ namespace jass {
  * @param set set with values set to 1
  * @return the list of the indices with values == 1
  */
-    inline std::vector<int> setToList(const Eigen::Ref<const Eigen::ArrayXi>& set) {
+    inline std::vector<int> set_to_list(const Eigen::Ref<const Eigen::ArrayXi>& set) {
         std::vector<int> list;
 
         for (int i = 0; i < set.size(); i++) {

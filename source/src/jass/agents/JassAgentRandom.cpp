@@ -13,7 +13,7 @@ jass::JassAgentRandom::JassAgentRandom() :
 }
 
 
-int jass::JassAgentRandom::actionTrump(const jass::GameObservation &obs) {
+int jass::JassAgentRandom::action_trump(const jass::GameObservation &obs) {
     // lock access to random generator
     std::lock_guard<std::mutex> lock(mutex);
 
@@ -26,16 +26,16 @@ int jass::JassAgentRandom::actionTrump(const jass::GameObservation &obs) {
     return (std::uniform_int_distribution<>{0, 5}(random_generator));
 }
 
-jass::ResultTrumpAction jass::JassAgentRandom::actionTrumpProb(const jass::GameObservation &obs) {
+jass::ResultTrumpAction jass::JassAgentRandom::action_trump_prob(const jass::GameObservation &obs) {
     // same probability for all
     Eigen::Array<float, 7, 1> probability;
     probability.fill(1.0f/7.0f);
     return { probability, Eigen::Array<float, 7, 1>::Zero()};
 }
 
-int jass::JassAgentRandom::actionPlayCard(const jass::GameObservation &obs) {
-    auto validCards = rule.getValidCardsFromObs(obs);
-    auto validCardsList = cardSetToList(validCards);
+int jass::JassAgentRandom::action_play_card(const jass::GameObservation &obs) {
+    auto validCards = rule.get_valid_cards_from_obs(obs);
+    auto validCardsList = card_set_to_list(validCards);
     int nrValid = (int)validCardsList.size();
 
     // lock access to random generator
@@ -48,8 +48,8 @@ int jass::JassAgentRandom::actionPlayCard(const jass::GameObservation &obs) {
     return action;
 }
 
-jass::ResultPlayCardAction jass::JassAgentRandom::actionPlayCardProb(const jass::GameObservation &obs) {
-    auto validCards = rule.getValidCardsFromObs(obs);
+jass::ResultPlayCardAction jass::JassAgentRandom::action_play_card_prob(const jass::GameObservation &obs) {
+    auto validCards = rule.get_valid_cards_from_obs(obs);
     int nrValidCards = validCards.sum();
 
     // same probability for all

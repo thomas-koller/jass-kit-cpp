@@ -26,13 +26,13 @@ public:
 
     ~JassAgentRandom() override = default;
 
-    int actionTrump(const jass::GameObservation &obs) override;
+    int action_trump(const jass::GameObservation &obs) override;
 
-    ResultTrumpAction actionTrumpProb(const jass::GameObservation &obs) override;
+    ResultTrumpAction action_trump_prob(const jass::GameObservation &obs) override;
 
-    int actionPlayCard(const jass::GameObservation &obs) override;
+    int action_play_card(const jass::GameObservation &obs) override;
 
-    ResultPlayCardAction actionPlayCardProb(const jass::GameObservation &obs) override;
+    ResultPlayCardAction action_play_card_prob(const jass::GameObservation &obs) override;
 
 };
 

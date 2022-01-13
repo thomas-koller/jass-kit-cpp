@@ -40,32 +40,36 @@ public:
             rule(std::move(rule))
     {}
 
-    void initFromCards(const CardSetPlayer& hands, int dealer);
+    inline GameRule::Ptr getRule() {
+        return this->rule;
+    }
+
+    void init_from_cards(const CardSetPlayer& hands, int dealer);
 
     /**
      * Perform a trump action and set the state accordingly. Actions are selecting a valid trump
      * or passing (push)
      * @param trump_action
      */
-    void performActionTrump(int trump_action);
+    void perform_action_trump(int trump_action);
 
     /**
      * Perform a action to play the given card by the current player. The state is updated accordingly.
      * @param card the card to play
      */
-    void performActionPlayCard(int card);
+    void perform_action_play_card(int card);
 
     /**
      * Perform action from the full set of actions, including trump.
      * @param action action to perform
      */
-    void performActionFull(int action);
+    void perform_action_full(int action);
 
     /**
      * Return true if the game has finished.
      * @return true if the game has finished, false otherwise
      */
-    inline bool isDone() const {
+    inline bool is_done() const {
         return state.nr_played_cards == 36;
     }
 
@@ -73,16 +77,16 @@ public:
      * Get valid cards from current state
      * @return the valid cards from current state
      */
-    inline CardSet getValidCards() const {
-        return rule->getValidCardsFromState(state);
+    inline CardSet get_valid_cards() const {
+        return rule->get_valid_cards_from_state(state);
     }
 
     /**
     * Get valid actions from current state
     * @return the valid actions from current state
     */
-    inline ActionFullSet getFullValidActionsFromState() const {
-        return rule->getFullValidActionsFromState(state);
+    inline ActionFullSet get_full_valid_actions_from_state() const {
+        return rule->get_full_valid_actions_from_state(state);
     }
 
 
@@ -90,7 +94,7 @@ private:
     /**
      * Calculate state at the end of a trick
      */
-    void endTrick();
+    void end_trick();
 
 };
 

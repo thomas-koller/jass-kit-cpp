@@ -34,7 +34,7 @@ public:
      * @param state the game state for the player
      * @return the trump action
      */
-    virtual int actionTrump(const jass::GameState& state) = 0;
+    virtual int action_trump(const jass::GameState& state) = 0;
 
     /**
      * Calculate the probabilities and rewards for the possible trump actions.
@@ -42,7 +42,7 @@ public:
      * @param state the game state for the player
      * @return the probabilities and rewards for each trump action
      */
-    virtual jass::ResultTrumpAction actionTrumpProb(const jass::GameState& state) = 0;
+    virtual jass::ResultTrumpAction action_trump_prob(const jass::GameState& state) = 0;
 
     /**
      * Select and return the card to play. The card should be a valid card for the given
@@ -51,7 +51,7 @@ public:
      * @param state the game state for the player
      * @return the card to play
      */
-    virtual int actionPlayCard(const jass::GameState& state) = 0;
+    virtual int action_play_card(const jass::GameState& state) = 0;
 
     /**
      * Calculate the probabilities and rewards for the card actions.
@@ -59,7 +59,7 @@ public:
      * @param state the game state for the player
      * @return the probabilities and rewards for each card action
      */
-    virtual jass::ResultPlayCardAction actionPlayCardProb(const jass::GameState& state) = 0;
+    virtual jass::ResultPlayCardAction action_play_card_prob(const jass::GameState& state) = 0;
 };
 
 

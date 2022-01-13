@@ -32,7 +32,7 @@ public:
      * @param obs the game observation for the player
      * @return the trump action
      */
-    virtual int actionTrump(const jass::GameObservation& obs) = 0;
+    virtual int action_trump(const jass::GameObservation& obs) = 0;
 
     /**
      * Calculate the probabilities and rewards for the possible trump actions.
@@ -40,7 +40,7 @@ public:
      * @param obs the game observation for the player
      * @return the probabilities and rewards for each trump action
      */
-    virtual jass::ResultTrumpAction actionTrumpProb(const jass::GameObservation& obs) = 0;
+    virtual jass::ResultTrumpAction action_trump_prob(const jass::GameObservation& obs) = 0;
 
     /**
      * Select and return the card to play. The card should be a valid card for the given
@@ -49,7 +49,7 @@ public:
      * @param obs the game observation for the player
      * @return the card to play
      */
-    virtual int actionPlayCard(const jass::GameObservation& obs) = 0;
+    virtual int action_play_card(const jass::GameObservation& obs) = 0;
 
     /**
      * Calculate the probabilities and rewards for the card actions.
@@ -57,7 +57,7 @@ public:
      * @param obs the game observation for the player
      * @return the probabilities and rewards for each card action
      */
-    virtual jass::ResultPlayCardAction actionPlayCardProb(const jass::GameObservation& obs) = 0;
+    virtual jass::ResultPlayCardAction action_play_card_prob(const jass::GameObservation& obs) = 0;
 };
 
 

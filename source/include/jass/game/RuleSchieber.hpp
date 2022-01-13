@@ -21,20 +21,20 @@ public:
 
     explicit RuleSchieber();
 
-    /// @copydoc Rule::getValidCards()
-    CardSet getValidCards(const CardSet &hand, const CardTrick &trick, int card_nr, int trump) override;
+    /// @copydoc Rule::get_valid_cards()
+    CardSet get_valid_cards(const CardSet &hand, const CardTrick &trick, int card_nr, int trump) override;
 
-    /// @copydoc Rule::calcPoints()
-    int calcPoints(const CardTrick &trick, bool is_last_card, int trump) override;
+    /// @copydoc Rule::calc_points()
+    int calc_points(const CardTrick &trick, bool is_last_card, int trump) override;
 
-    /// @copydoc Rule::calcWinner()
-    int calcWinner(const CardTrick &trick, int first_player, int trump) override;
+    /// @copydoc Rule::calc_winner()
+    int calc_winner(const CardTrick &trick, int first_player, int trump) override;
 
     /// check invariants for this rule and state
-    void assertInvariants(const GameState &state) const override;
+    void assert_invariants(const GameState &state) const override;
 
     /// check invariants for this rule and obs
-    void assertInvariants(const GameObservation &obs) const override;
+    void assert_invariants(const GameObservation &obs) const override;
 
 private:
     Eigen::Array<int, 36, 36> higher_trump;

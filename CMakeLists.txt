@@ -5,12 +5,13 @@ SET(PROJECTNAME Jass)
 project(${PROJECTNAME}
         VERSION 1.1.0)
 
-set(CMAKE_CXX_STANDARD 11)  # enable C++11 standard
+set(CMAKE_CXX_STANDARD 14)  # enable C++14 standard
 
 
 # Eigen library
 find_package (Eigen3 3.3 REQUIRED NO_MODULE)
-include_directories(${EIGEN3_INCLUDE_DIR})
+#include_directories(${EIGEN3_INCLUDE_DIR})
+include_directories("/usr/local/include/eigen3")
 
 # google test
 add_subdirectory("extern/googletest" EXCLUDE_FROM_ALL)

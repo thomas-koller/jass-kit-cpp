@@ -4,9 +4,9 @@
 
 #include "jass/game/GameSim.hpp"
 
-void jass::GameSim::initFromCards(const jass::CardSetPlayer &hands, int dealer) {
+void jass::GameSim::init_from_cards(const jass::CardSetPlayer &hands, int dealer) {
     state.dealer = dealer;
-    state.player = nextPlayer(dealer);
+    state.player = next_player(dealer);
     state.trump = -1;
     state.forehand = -1;
     state.hands = hands;
@@ -21,33 +21,33 @@ void jass::GameSim::initFromCards(const jass::CardSetPlayer &hands, int dealer) 
     state.points[1] = 0;
 }
 
-void jass::GameSim::performActionTrump(int trump_action) {
+void jass::GameSim::perform_action_trump(int trump_action) {
     if (state.forehand == -1) {
         // action of the forehand player
         if (trump_action == PUSH) {
             state.forehand = 0;
-            state.player = partnerPlayer(state.player);
+            state.player = partner_player(state.player);
         } else {
             // player declares trump
             state.forehand = 1;
             state.trump = trump_action;
             state.declared_trump_player = state.player;
             // next action is to play a card
-            state.player = nextPlayer(state.dealer);
+            state.player = next_player(state.dealer);
             state.trick_first_player(0) = state.player;
         }
     } else if (state.forehand == 0) {
         // action of the rearhand player
         state.trump = trump_action;
         state.declared_trump_player = state.player;
-        state.player = nextPlayer(state.dealer);
+        state.player = next_player(state.dealer);
         state.trick_first_player(0) = state.player;
     } else {
         throw std::invalid_argument("Illegal forehand state");
     }
 }
 
-void jass::GameSim::performActionPlayCard(int card) {
+void jass::GameSim::perform_action_play_card(int card) {
     // remove card from player
     assert(state.hands(state.player, card) == 1);
     state.hands(state.player, card) = 0;
@@ -60,40 +60,40 @@ void jass::GameSim::performActionPlayCard(int card) {
         if (state.nr_cards_in_trick == 0) {
             // this is usually already set at the end of the last trick, however
             // when data is provided externally, that might not be set
-            // TODO: check if still needs to be set in endTrick() or if it should just be here
+            // TODO: check if still needs to be set in end_trick() or if it should just be here
             state.trick_first_player(state.current_trick) = state.player;
         }
         // trick is not yet finished
         state.nr_cards_in_trick++;
-        state.player = nextPlayer(state.player);
+        state.player = next_player(state.player);
     } else {
         // trick is finished
-        endTrick();
+        end_trick();
     }
 }
 
-void jass::GameSim::performActionFull(int action) {
+void jass::GameSim::perform_action_full(int action) {
     if (action < TRUMP_FULL_OFFSET) {
-        performActionPlayCard(action);
+        perform_action_play_card(action);
     } else {
         int trump_action = action - TRUMP_FULL_OFFSET;
         if (trump_action == PUSH_ALT) {
             trump_action = PUSH;
         }
-        performActionTrump(trump_action);
+        perform_action_trump(trump_action);
     }
 }
 
 
-void jass::GameSim::endTrick() {
+void jass::GameSim::end_trick() {
     // update information about the current trick
-    int pts = rule->calcPoints(
+    int pts = rule->calc_points(
             state.tricks.row(state.current_trick),
             state.nr_played_cards == 36,
             state.trump);
     state.trick_points[state.current_trick] = pts;
 
-    int winner = rule->calcWinner(
+    int winner = rule->calc_winner(
             state.tricks.row(state.current_trick),
             state.trick_first_player[state.current_trick],
             state.trump);
