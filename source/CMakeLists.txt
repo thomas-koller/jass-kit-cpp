@@ -53,12 +53,13 @@ install(TARGETS ${JASS_LIB} ${JASS_LIB_STATIC}
         ARCHIVE DESTINATION lib
        )
 
-# install with preserving structure
+# install headers preserving the jass/ directory layout, so consumers can
+# #include <jass/...>. Note: install(DIRECTORY) has no EXPORT keyword -- the
+# target export set is handled by install(TARGETS ... EXPORT) above.
 install(
-        DIRECTORY ${CMAKE_SOURCE_DIR}/source/include/jass
-        EXPORT ${JASS_LIB}
+        DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/jass
         DESTINATION include
-        FILES_MATCHING PATTERN "*.hpp"
+        FILES_MATCHING PATTERN "*.hpp" PATTERN "*.h"
 )
 
 install(EXPORT ${JASS_LIB} DESTINATION lib/jass)

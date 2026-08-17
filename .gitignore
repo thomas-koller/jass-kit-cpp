@@ -43,3 +43,8 @@ dist
 cmake-build-debug
 cmake-build-release
 
+
+# local build directories
+build/
+build_*/
+*.egg-info/

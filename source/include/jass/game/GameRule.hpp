@@ -37,6 +37,12 @@ public:
     virtual CardSet get_valid_cards(const CardSet& hand, const CardTrick& trick, int card_nr, int trump) = 0;
 
     CardSet get_valid_cards_from_state(const GameState& state) {
+        // A finished game has no valid cards. Without this the row index below
+        // is NR_TRICKS, which asserts in a debug build and reads out of bounds
+        // in a release build.
+        if (state.nr_played_cards == NR_CARDS) {
+            return CardSet::Zero();
+        }
         return get_valid_cards(
                 state.hands.row(state.player),
                 state.tricks.row(state.current_trick),
@@ -45,6 +51,9 @@ public:
     }
 
     CardSet get_valid_cards_from_obs(const GameObservation& obs) {
+        if (obs.nr_played_cards == NR_CARDS) {
+            return CardSet::Zero();
+        }
         return get_valid_cards(
                 obs.hand,
                 obs.tricks.row(obs.current_trick),
@@ -78,6 +87,11 @@ public:
      */
     inline ActionFullSet get_full_valid_actions_from_state(const GameState &state) {
         ActionFullSet action = ActionFullSet::Zero();
+        // A finished game has no valid actions; returning here also keeps the
+        // check below from reporting that as an error.
+        if (state.nr_played_cards == NR_CARDS) {
+            return action;
+        }
         if (state.trump == -1) {
             // get trump action
             if (state.forehand == -1) {
@@ -89,12 +103,7 @@ public:
             }
         } else {
             // valid cards
-            auto cards = get_valid_cards(
-                    state.hands.row(state.player),
-                    state.tricks.row(state.current_trick),
-                    state.nr_cards_in_trick,
-                    state.trump);
-            action.segment<36>(0) = cards;
+            action.segment<36>(0) = get_valid_cards_from_state(state);
         }
 #ifndef NDEBUG
         if (action.sum() == 0) {
@@ -112,6 +121,10 @@ public:
      */
     inline ActionFullSet get_full_valid_actions_from_obs(const GameObservation &obs) {
         ActionFullSet action = ActionFullSet::Zero();
+        // A finished game has no valid actions.
+        if (obs.nr_played_cards == NR_CARDS) {
+            return action;
+        }
         if (obs.trump == -1) {
             // get trump action
             if (obs.forehand == -1) {
@@ -123,11 +136,7 @@ public:
             }
         } else {
             // valid cards
-            action.segment<36>(0) = get_valid_cards(
-                    obs.hand,
-                    obs.tricks.row(obs.current_trick),
-                    obs.nr_cards_in_trick,
-                    obs.trump);
+            action.segment<36>(0) = get_valid_cards_from_obs(obs);
         }
         return action;
     }
